@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>منصّة إعلانات «أنا و هي»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F3F8; --panel:#fff; --panel2:#FAF9FD; --edge:#E4E1EF;
+  --ink:#1C1830; --ink2:#4A4364; --muted:#757090;
+  --plum:#5B4BAE; --plum2:#8D7FD6; --plumSoft:#EFEBFB;
+  --gold:#C77E1E; --goldSoft:#FBEFDA;
+  --rose:#D64A6C; --roseSoft:#FCE4EA;
+  --sage:#4F8C3B; --sageSoft:#E6F2DF;
+  --deep:#241F3B;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#131020; --panel:#1C1830; --panel2:#221D3A; --edge:#2E2848;
+    --ink:#EEEBF8; --ink2:#C2BCDC; --muted:#8F88AE;
+    --plum:#9B8BE8; --plum2:#6F60BE; --plumSoft:#241F3F;
+    --gold:#E9A44E; --goldSoft:#33260F;
+    --rose:#F07A99; --roseSoft:#351926;
+    --sage:#93C77E; --sageSoft:#1D2C17;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Tajawal',system-ui,sans-serif;font-size:15px;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+h1{font-size:clamp(24px,4vw,34px);font-weight:900;margin:0}
+h2{font-size:17px;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:14px;margin-top:6px}
+header{padding:36px 0 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(140deg,#5B4BAE,#8D7FD6);display:grid;place-items:center;font-size:22px}
+.card{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:20px;margin-bottom:16px}
+label{display:block;font-weight:700;font-size:13.5px;margin-bottom:6px}
+input[type=text],input[type=email],textarea,select{
+  width:100%;background:var(--panel2);border:1px solid var(--edge);border-radius:11px;
+  padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);min-height:46px}
+textarea{min-height:96px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--plum);outline-offset:1px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>*{flex:1;min-width:180px}
+.grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+button{font-family:inherit;font-size:14.5px;font-weight:700;border:0;border-radius:11px;padding:12px 18px;min-height:46px;cursor:pointer;color:#fff;background:var(--plum)}
+button.ghost{background:transparent;color:var(--plum);border:1px solid var(--edge)}
+button.gold{background:var(--gold)}
+button.danger{background:transparent;color:var(--rose);border:1px solid var(--edge)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:var(--panel2);border:1px solid var(--edge);border-radius:100px;padding:9px 15px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--muted);user-select:none}
+.chip.on{background:var(--plum);border-color:var(--plum);color:#fff}
+.chip.on.gold{background:var(--gold);border-color:var(--gold)}
+.chip.on.sage{background:var(--sage);border-color:var(--sage)}
+.chip.on.rose{background:var(--rose);border-color:var(--rose)}
+.switch{display:flex;align-items:center;gap:12px;padding:10px 0}
+.switch input{width:44px;height:26px;accent-color:var(--plum);cursor:pointer}
+.count{font-family:var(--mono);font-size:12px;color:var(--muted);direction:ltr}
+.count.over{color:var(--rose);font-weight:600}
+.note{color:var(--muted);font-size:13px}
+.hint{background:var(--goldSoft);border-inline-start:3px solid var(--gold);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px;color:var(--ink2)}
+.ok{background:var(--sageSoft);border-inline-start:3px solid var(--sage);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px}
+.err{background:var(--roseSoft);border-inline-start:3px solid var(--rose);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px}
+code{font-family:var(--mono);font-size:12.5px;direction:ltr;display:inline-block;background:var(--panel2);padding:1px 6px;border-radius:5px}
+
+/* ── معاينة الجوال ── */
+.phone{background:var(--deep);border-radius:34px;padding:8px;position:sticky;top:20px}
+.screen{background:#2A2340;border-radius:27px;padding:52px 12px 16px;min-height:420px;display:flex;flex-direction:column;gap:12px}
+.notif{background:rgba(255,255,255,.94);border-radius:17px;padding:12px;display:flex;gap:10px;color:#141024}
+.nicon{width:32px;height:32px;border-radius:9px;background:linear-gradient(140deg,#5B4BAE,#8D7FD6);flex:0 0 auto}
+.napp{font-size:10.5px;font-weight:700;color:#3C3552;display:flex;gap:8px}
+.napp span:last-child{margin-inline-start:auto;color:#7A7391;font-weight:500}
+.ntitle{font-size:14px;font-weight:800;margin-top:1px}
+.nsub{font-size:12px;color:#3C3552}
+.nbody{font-size:12.5px;color:#3C3552;line-height:1.55}
+.nimg{width:100%;height:96px;object-fit:cover;border-radius:10px;margin-top:8px;display:none}
+.inapp{background:#F6F5FA;border-radius:16px;padding:12px;color:#241F3B}
+.strip{display:flex;align-items:center;gap:8px;border-radius:100px;border:1px solid;padding:8px 12px;font-size:13px;font-weight:600;overflow:hidden;white-space:nowrap}
+.stripdot{width:22px;height:22px;border-radius:11px;flex:0 0 auto}
+.board{border-radius:14px;border:1px solid;overflow:hidden;background:#fff}
+.board img{width:100%;height:120px;object-fit:cover;display:block}
+.bpad{padding:12px}
+.bkind{font-size:11px;font-weight:800;margin-bottom:3px}
+.btitle{font-size:15px;font-weight:800}
+.bbody{font-size:13px;color:#4A4364;margin-top:3px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:right;padding:10px 12px;border-bottom:1px solid var(--edge)}
+th{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+tbody tr:last-child td{border-bottom:0}
+.pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;display:inline-block}
+.hide{display:none!important}
+.center{max-width:440px;margin:60px auto;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="logo">💜</div>
+  <div>
+    <h1>منصّة الإعلانات</h1>
+    <div class="sub">تنشر من هنا — فيصل كلّ من يستعمل «أنا و هي»</div>
+  </div>
+  <div style="margin-inline-start:auto;display:flex;align-items:center;gap:10px">
+    <button class="ghost" id="openCfg" style="padding:7px 14px;min-height:0;font-size:12.5px">الإعدادات</button>
+    <div id="whoBox" class="hide" style="text-align:center">
+      <div class="note" id="who"></div>
+      <button class="ghost" id="signOut" style="margin-top:6px;padding:7px 14px;min-height:0">خروج</button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ الإعداد ════════ -->
+<section id="setup" class="card hide">
+  <h2>الإعداد — مرّة واحدة</h2>
+  <p class="sub">أدخل عنوان مشروعك في Supabase ومفتاحه المنشور (anon). يُحفظان في هذا المتصفّح وحده.</p>
+  <div class="hint" style="margin:14px 0">
+    <b>لا تضع المفتاح السرّي هنا أبدًا.</b> المفتاح المنشور كافٍ: الصلاحية تحرسها
+    سياسات <code>RLS</code> في قاعدة البيانات، لا هذه الصفحة.
+  </div>
+  <div style="display:grid;gap:12px">
+    <div><label>Project URL</label><input type="text" id="cfgUrl" placeholder="https://xxxx.supabase.co" dir="ltr"></div>
+    <div><label>Anon / Publishable key</label><input type="text" id="cfgKey" placeholder="sb_publishable_…" dir="ltr"></div>
+    <button id="cfgSave">حفظ ومتابعة</button>
+  </div>
+</section>
+
+<!-- ════════ الدخول ════════ -->
+<section id="auth" class="card hide">
+  <div class="center">
+    <h2>دخول صاحب التطبيق</h2>
+    <p class="sub" style="margin-bottom:20px">ادخل بالحساب نفسه الذي تستعمله في التطبيق.</p>
+    <div style="display:grid;gap:10px;text-align:right">
+      <button id="btnGoogle">المتابعة عبر Google</button>
+      <div class="note" style="text-align:center;margin:4px 0">أو برابط يصلك على بريدك</div>
+      <input type="email" id="email" placeholder="بريدك الإلكتروني" dir="ltr">
+      <button class="ghost" id="btnMagic">أرسل لي رابط الدخول</button>
+    </div>
+    <div id="authMsg" style="margin-top:16px"></div>
+  </div>
+</section>
+
+<!-- ════════ ليس مشرفًا ════════ -->
+<section id="denied" class="card hide">
+  <div class="center">
+    <h2>حسابك ليس في جدول المشرفين</h2>
+    <p class="sub">النشر محروس بقاعدة البيانات لا بهذه الصفحة — فلا يكفي فتحها.</p>
+    <div class="hint" style="text-align:right;margin-top:18px">
+      شغّل <code>supabase/announcements.sql</code> ثمّ أضف معرّفك:
+      <div style="margin-top:8px"><code id="myUid" style="user-select:all"></code></div>
+      <div style="margin-top:10px;font-family:var(--mono);font-size:12px;direction:ltr;text-align:left;white-space:pre-wrap;line-height:1.6;background:var(--panel2);border:1px solid var(--edge);border-radius:8px;padding:10px" id="sqlSnippet"></div>
+      <button class="ghost" id="copySql" style="margin-top:10px;padding:8px 16px;min-height:0">نسخ الأمر</button>
+      <div id="copyMsg" class="note" style="margin-top:6px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ اللوحة ════════ -->
+<main id="app" class="hide">
+<div class="grid">
+
+  <div>
+    <div class="card">
+      <h2>إعلان جديد</h2>
+
+      <div style="display:grid;gap:16px;margin-top:16px">
+        <div>
+          <label>العنوان <span class="count" id="cTitle">0/60</span></label>
+          <input type="text" id="title" placeholder="مثال: تحديث جديد 🎉" maxlength="120">
+        </div>
+
+        <div>
+          <label>نصّ الإشعار <span class="count" id="cBody">0/178</span></label>
+          <textarea id="body" placeholder="اكتب ما تريد قوله…" maxlength="400"></textarea>
+        </div>
+
+        <div>
+          <label>سطر فرعي (اختياري)</label>
+          <input type="text" id="subtitle" placeholder="يظهر بين العنوان والنصّ" maxlength="120">
+        </div>
+
+        <div>
+          <label>النوع</label>
+          <div class="chips" id="kinds"></div>
+        </div>
+
+        <div>
+          <label>صورة (اختياري)</label>
+          <input type="file" id="file" accept="image/*" style="font-size:13.5px">
+          <div class="note" style="margin-top:6px">
+            تظهر داخل اللوحة على الرئيسية. ولإظهارها داخل الإشعار نفسه انظر الملاحظة أسفل.
+          </div>
+          <div id="imgState" style="margin-top:8px"></div>
+        </div>
+
+        <div>
+          <label>الضغط عليه يفتح</label>
+          <select id="route">
+            <option value="">لا شيء — يفتح التطبيق</option>
+            <option value="/home">الرئيسية</option>
+            <option value="/week">التقويم</option>
+            <option value="/meeting">الاجتماع</option>
+            <option value="/goals">الأهداف</option>
+            <option value="/budget">الميزانية</option>
+            <option value="/activities">الفعاليات</option>
+            <option value="/needs">الاحتياجات</option>
+            <option value="/health">عافيتنا</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>القنوات والمدّة</h2>
+
+      <div class="switch">
+        <input type="checkbox" id="inApp" checked>
+        <div>
+          <div style="font-weight:700">يظهر داخل التطبيق</div>
+          <div class="note">يبقى على الرئيسية مدّة تختارها — ولا يُزعج</div>
+        </div>
+      </div>
+
+      <div id="inAppOpts">
+        <div style="margin:10px 0">
+          <label>شكله</label>
+          <div class="chips" id="styles"></div>
+        </div>
+        <div>
+          <label>يبقى</label>
+          <div class="chips" id="durs"></div>
+        </div>
+      </div>
+
+      <div class="switch" style="margin-top:14px;border-top:1px solid var(--edge);padding-top:16px">
+        <input type="checkbox" id="push" checked>
+        <div>
+          <div style="font-weight:700">إشعار على الجوال</div>
+          <div class="note" id="pushNote">ينبّه فورًا على شاشة القفل — ثم يزول</div>
+        </div>
+      </div>
+
+      <div id="pushInfo" class="note" style="margin-top:8px"></div>
+    </div>
+
+    <div id="msg"></div>
+    <button class="gold" id="publish" style="width:100%">نشر للجميع</button>
+    <p class="note" style="text-align:center;margin-top:10px">
+      يُقرأ على كل جهاز. راجع النصّ قبل النشر.
+    </p>
+  </div>
+
+  <!-- ── المعاينة ── -->
+  <div>
+    <div class="note" style="margin-bottom:8px">على شاشة القفل</div>
+    <div class="phone">
+      <div class="screen">
+        <div class="notif">
+          <div class="nicon"></div>
+          <div style="flex:1;min-width:0">
+            <div class="napp"><span>أنا &amp; هي</span><span>الآن</span></div>
+            <div class="ntitle" id="pvTitle">عنوان الإعلان</div>
+            <div class="nsub" id="pvSub"></div>
+            <div class="nbody" id="pvBody"></div>
+            <img class="nimg" id="pvImg" alt="">
+          </div>
+        </div>
+
+        <div class="note" style="color:rgba(255,255,255,.6);font-size:11px;margin-top:4px">وداخل التطبيق</div>
+        <div class="inapp" id="pvInApp"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── المنشور ── -->
+<div class="card" style="margin-top:24px">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <h2 style="flex:1">ما نُشر</h2>
+    <button class="ghost" id="reload" style="padding:8px 14px;min-height:0">تحديث</button>
+  </div>
+  <div style="overflow-x:auto;margin-top:12px">
+    <table>
+      <thead><tr><th>العنوان</th><th>النوع</th><th>الشكل</th><th>يظهر حتى</th><th>الحالة</th><th></th></tr></thead>
+      <tbody id="list"><tr><td colspan="6" class="note">…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <h2>ملاحظتان</h2>
+  <p class="note" style="margin-top:8px">
+    <b>الصورة داخل الإشعار:</b> تُعرض داخل التطبيق دائمًا. أمّا ظهورها في الإشعار
+    نفسه على iOS فيحتاج <span style="color:var(--ink2)">Notification Service Extension</span>
+    في نسخة أصلية جديدة — وهي غير مضافة بعد، فلا تعتمد عليها الآن.
+  </p>
+  <p class="note" style="margin-top:10px">
+    <b>«لمين يوصل»:</b> التطبيق ليس فيه فئات مستخدمين (لا مشترون ولا مزوّدون) —
+    كلّ مستخدميه أزواج متساوون. فالإعلان يصل الجميع، ومن أراد رسالة لشريكه وحده
+    فتلك «لمسة اليوم» داخل التطبيق لا إعلان من هنا.
+  </p>
+</div>
+</main>
+
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+/* ═══════════════════════════════════════════════════════════
+   منصّة الإعلانات — صفحة واحدة، بلا خادم، وبلا مفتاح سرّي.
+   الصلاحية تحرسها سياسات RLS في قاعدة البيانات: إخفاء زرّ هنا ليس حماية،
+   ورفضُ الإدراج هناك هو الحماية. انظر supabase/announcements.sql
+   ═══════════════════════════════════════════════════════════ */
+
+const $ = (id) => document.getElementById(id);
+const show = (id, on = true) => $(id).classList.toggle('hide', !on);
+
+const KINDS = [
+  { id:'info', label:'خبر',   cls:'',      tint:'var(--plum)', soft:'var(--plumSoft)' },
+  { id:'good', label:'تهنئة', cls:'sage',  tint:'var(--sage)', soft:'var(--sageSoft)' },
+  { id:'warn', label:'انتبه', cls:'gold',  tint:'var(--gold)', soft:'var(--goldSoft)' },
+  { id:'love', label:'تحفيز', cls:'rose',  tint:'var(--rose)', soft:'var(--roseSoft)' },
+];
+const STYLES = [{ id:'strip', label:'شريط' }, { id:'board', label:'لوحة' }];
+const DURS = [{ d:0, label:'اليوم' }, { d:2, label:'٣ أيام' }, { d:6, label:'أسبوع' }, { d:29, label:'شهر' }, { d:-1, label:'بلا نهاية' }];
+const LIMITS = { title:60, body:178 };
+
+/*
+ * القيمتان الافتراضيّتان — عنوان المشروع والمفتاح **المنشور**.
+ *
+ * وضعهما هنا لا يكشف شيئًا: هما نفسهما داخل التطبيق على جوّال كل مستخدم، ويمكن
+ * استخراجهما منه بدقائق. والمفتاح المنشور لا يمنح صلاحية بذاته — سياسات RLS هي
+ * التي تقرّر من يقرأ ومن يكتب. المفتاح السرّي وحده هو الذي يتجاوزها، ولا وجود له
+ * في هذا المشروع كلّه.
+ *
+ * وبقاء شاشة الإعداد متاحة (زرّ «الإعدادات» بالأعلى) يفيد لتوجيه المنصّة لمشروع
+ * آخر بلا تعديل الملف.
+ */
+const DEFAULTS = {
+  url: 'https://ifbbwozivnwfbqxugrvl.supabase.co',
+  key: 'sb_publishable_N-JpdUPCPl9tSWpXYtHAzQ_kaCwmnGi',
+};
+
+let sb = null, user = null, isAdmin = false;
+let kind = 'info', style = 'strip', durDays = 6, imageUrl = '';
+
+/* ─────────── الإعداد ─────────── */
+/*
+ * `localStorage` يرمي — لا يُرجع فارغًا — في التصفّح الخاصّ وفي سياقات `data:`
+ * وحين يمنع المتصفّح تخزين المواقع. وصفحةٌ تموت لأن حفظ إعدادٍ فشل أسوأ من صفحة
+ * بلا حفظ: فنلتقط الخطأ ونُبقيها عاملة بذاكرة الجلسة.
+ */
+let memUrl = '', memKey = '';
+const safeGet = (k) => { try { return localStorage.getItem(k) || ''; } catch { return ''; } };
+const safeSet = (k,v) => { try { localStorage.setItem(k,v); } catch { /* الجلسة تكفي */ } };
+const cfg = {
+  get url(){ return safeGet('sb_url') || memUrl || DEFAULTS.url; },
+  get key(){ return safeGet('sb_key') || memKey || DEFAULTS.key; },
+  save(u,k){
+    memUrl = u.trim().replace(/\/$/,''); memKey = k.trim();
+    safeSet('sb_url', memUrl); safeSet('sb_key', memKey);
+  },
+};
+
+function connect(){
+  sb = createClient(cfg.url, cfg.key, { auth: { persistSession:true, detectSessionInUrl:true } });
+}
+
+/* ─────────── الإقلاع ─────────── */
+async function boot(){
+  if (!cfg.url || !cfg.key) { show('setup'); return; }
+  connect();
+  const { data:{ session } } = await sb.auth.getSession();
+  if (!session) { show('auth'); return; }
+  user = session.user;
+  $('who').textContent = user.email || user.id.slice(0,8);
+  show('whoBox');
+
+  const { data, error } = await sb.from('app_admins').select('user_id').eq('user_id', user.id).maybeSingle();
+  if (error && /relation .* does not exist/i.test(error.message||'')) {
+    show('denied');
+    $('myUid').textContent = user.id;
+    $('sqlSnippet').textContent = "-- الجدول غير موجود. شغّل supabase/announcements.sql أولًا.";
+    return;
+  }
+  isAdmin = !!data;
+  if (!isAdmin) {
+    show('denied');
+    $('myUid').textContent = user.id;
+    $('sqlSnippet').textContent =
+      "insert into public.app_admins (user_id, note)\nvalues ('" + user.id + "', 'owner')\non conflict (user_id) do nothing;";
+    return;
+  }
+  show('app');
+  buildChips();
+  bind();
+  render();
+  loadList();
+  checkTokens();
+}
+
+document.addEventListener('click', async (e) => {
+  if (e.target.id !== 'copySql') return;
+  try {
+    await navigator.clipboard.writeText($('sqlSnippet').textContent);
+    $('copyMsg').textContent = 'نُسخ ✓ — الصقه في Supabase ← SQL Editor';
+  } catch {
+    // الحافظة تحتاج سياقًا آمنًا (https أو localhost) — نُحدّد النصّ ليُنسخ يدويًّا
+    const r = document.createRange();
+    r.selectNodeContents($('sqlSnippet'));
+    getSelection().removeAllRanges();
+    getSelection().addRange(r);
+    $('copyMsg').textContent = 'حُدِّد النصّ — انسخه بـ⌘C';
+  }
+});
+
+$('openCfg').onclick = () => {
+  const on = $('setup').classList.contains('hide');
+  show('setup', on);
+  if (on) { $('cfgUrl').value = cfg.url; $('cfgKey').value = cfg.key; }
+};
+
+$('cfgSave').onclick = () => {
+  const u = $('cfgUrl').value, k = $('cfgKey').value;
+  if (!u || !k) return;
+  if (/^sb_secret|^service_role|^eyJ/.test(k.trim())) {
+    alert('هذا يبدو مفتاحًا سرّيًّا. استعمل المفتاح المنشور (anon / publishable) وحده.');
+    return;
+  }
+  cfg.save(u,k); location.reload();
+};
+
+$('btnGoogle').onclick = async () => {
+  await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.href.split('#')[0] } });
+};
+$('btnMagic').onclick = async () => {
+  const email = $('email').value.trim();
+  if (!email) return;
+  const { error } = await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.href.split('#')[0] } });
+  $('authMsg').innerHTML = error
+    ? '<div class="err">'+error.message+'</div>'
+    : '<div class="ok">أُرسل رابط الدخول إلى بريدك.</div>';
+};
+$('signOut').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+/* ─────────── الواجهة ─────────── */
+function buildChips(){
+  $('kinds').innerHTML = KINDS.map(k =>
+    `<div class="chip ${k.cls} ${k.id===kind?'on':''}" data-kind="${k.id}">${k.label}</div>`).join('');
+  $('styles').innerHTML = STYLES.map(s =>
+    `<div class="chip ${s.id===style?'on':''}" data-style="${s.id}">${s.label}</div>`).join('');
+  $('durs').innerHTML = DURS.map(d =>
+    `<div class="chip ${d.d===durDays?'on':''}" data-dur="${d.d}">${d.label}</div>`).join('');
+}
+
+function bind(){
+  $('kinds').onclick = (e) => { const v=e.target.dataset.kind; if(!v)return; kind=v; buildChips(); render(); };
+  $('styles').onclick = (e) => { const v=e.target.dataset.style; if(!v)return; style=v; buildChips(); render(); };
+  $('durs').onclick = (e) => { const v=e.target.dataset.dur; if(v===undefined)return; durDays=+v; buildChips(); };
+  ['title','body','subtitle'].forEach(id => $(id).oninput = render);
+  $('inApp').onchange = () => { show('inAppOpts', $('inApp').checked); render(); };
+  $('push').onchange = render;
+  $('file').onchange = upload;
+  $('publish').onclick = publish;
+  $('reload').onclick = loadList;
+}
+
+function clamp(t, n){ t=(t||'').trim(); return t.length<=n ? {s:t,cut:false} : {s:t.slice(0,n).trimEnd()+'…',cut:true}; }
+
+function render(){
+  const t = clamp($('title').value, LIMITS.title);
+  const b = clamp($('body').value, LIMITS.body);
+  const s = clamp($('subtitle').value, 60);
+
+  $('cTitle').textContent = `${$('title').value.length}/${LIMITS.title}`;
+  $('cTitle').classList.toggle('over', $('title').value.length > LIMITS.title);
+  $('cBody').textContent = `${$('body').value.length}/${LIMITS.body}`;
+  $('cBody').classList.toggle('over', $('body').value.length > LIMITS.body);
+
+  $('pvTitle').textContent = t.s || 'عنوان الإعلان';
+  $('pvSub').textContent = s.s;
+  $('pvBody').textContent = b.s;
+  $('pvImg').style.display = imageUrl ? 'block' : 'none';
+  if (imageUrl) $('pvImg').src = imageUrl;
+
+  const k = KINDS.find(x => x.id===kind);
+  const title = t.s || 'العنوان';
+  $('pvInApp').innerHTML = !$('inApp').checked
+    ? '<div class="note" style="font-size:12px">لن يظهر داخل التطبيق — إشعار فقط.</div>'
+    : style === 'strip'
+      ? `<div class="strip" style="background:${k.soft};border-color:${k.tint}44">
+           <span class="stripdot" style="background:${k.tint}"></span>
+           <span style="overflow:hidden;text-overflow:ellipsis">${esc(b.s ? title+' — '+b.s : title)}</span>
+         </div>`
+      : `<div class="board" style="border-color:${k.tint}3A">
+           ${imageUrl ? `<img src="${esc(imageUrl)}" alt="">` : ''}
+           <div class="bpad">
+             <div class="bkind" style="color:${k.tint}">${k.label}</div>
+             <div class="btitle">${esc(title)}</div>
+             ${b.s ? `<div class="bbody">${esc(b.s)}</div>` : ''}
+           </div>
+         </div>`;
+}
+
+const esc = (s) => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ─────────── الصورة ─────────── */
+async function upload(e){
+  const f = e.target.files?.[0];
+  if (!f) return;
+  $('imgState').innerHTML = '<div class="note">يُرفع…</div>';
+  const path = `announcements/${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
+  const { error } = await sb.storage.from('public-assets').upload(path, f, { contentType:f.type, upsert:false });
+  if (error) {
+    // المخزن العامّ غير مهيّأ — نُبقي المعاينة محليًّا ونقول السبب بلا غموض
+    imageUrl = URL.createObjectURL(f);
+    $('imgState').innerHTML = '<div class="err">تعذّر الرفع: '+esc(error.message)+
+      '<br>أنشئ مخزنًا عامًّا باسم <code>public-assets</code> من لوحة Supabase.</div>';
+    render();
+    return;
+  }
+  const { data } = sb.storage.from('public-assets').getPublicUrl(path);
+  imageUrl = data.publicUrl;
+  $('imgState').innerHTML = '<div class="ok">رُفعت ✓</div>';
+  render();
+}
+
+/* ─────────── الإشعار الفوري ─────────── */
+/*
+ * عدّ الأجهزة — **فريدة** لا صفوفًا.
+ * الصفّان لجهاز واحد يقعان فعلًا (تسجيل خروج ودخول يُحدّث الرمز، وقد يبقى القديم
+ * على صفٍّ آخر). عدُّ الصفوف كان يقول «٩» والحقيقة ٦ — ورقمٌ يكذب في التقرير
+ * يجعل كل ما بعده مشكوكًا فيه.
+ */
+async function tokens(){
+  const { data, error } = await sb.from('profiles').select('push_token').not('push_token','is',null);
+  if (error || !data) return [];
+  return [...new Set(data.map(r => r.push_token).filter(t => t && t.startsWith('ExponentPushToken')))];
+}
+
+/** هل دالّة الإرسال منشورة؟ بدونها لا إشعار فوري — والمتصفّح لا يبلغ Expo مباشرةً */
+let pushReady = false;
+async function checkTokens(){
+  const t = await tokens();
+  if (!t.length) {
+    pushReady = false;
+    $('pushInfo').innerHTML = '<span style="color:var(--gold)">لم تُفعَّل سياسة قراءة رموز الإشعارات</span> — '
+      + 'سيصل الإعلان داخل التطبيق ويُنبّه كل جهاز نفسه عند فتحه. (القسم ٣ في announcements.sql)';
+    return;
+  }
+  const { error } = await sb.functions.invoke('send-push', { body: { probe:true } });
+  // خطأ ٤٠٠ «العنوان مطلوب» يعني أن الدالّة تعمل وتحرس — وهو ما نريد التأكّد منه
+  const missing = error && /not found|does not exist|Failed to send/i.test(error.message || '');
+  pushReady = !missing;
+  $('pushInfo').innerHTML = pushReady
+    ? `${t.length} جهازًا سيصله الإشعار فورًا.`
+    : `${t.length} جهازًا — لكن <span style="color:var(--gold)">دالّة الإرسال غير منشورة</span>، `
+      + 'فلا إشعار فوري بعد. انشر <code>supabase/send-push-function.ts</code> باسم <code>send-push</code>. '
+      + 'وحتى ذلك يصل الإعلان داخل التطبيق ويُنبّه كل جهاز نفسه عند فتحه.';
+}
+
+/*
+ * الإرسال يمرّ بدالّة الحافّة لا بـExpo مباشرةً.
+ *
+ * Expo لا تُرسل `Access-Control-Allow-Origin`، فالمتصفّح يقتل الطلب قبل خروجه
+ * (`TypeError: Failed to fetch`). وهذا حدٌّ مقصود يمنع أي صفحة من قصف الخدمة —
+ * لا عيبٌ يُلتفّ عليه. فالدالّة هي الطرف الخادم الذي يُرسل، وهي تتحقّق من أنك
+ * مشرف بـرمزك أنت قبل أن ترسل شيئًا.
+ */
+async function sendPush(_list, content){
+  const { data, error } = await sb.functions.invoke('send-push', { body: content });
+  if (error) return { sent:0, failed:0, error: error.message };
+  return { sent: data?.sent ?? 0, failed: data?.failed ?? 0 };
+}
+
+/* ─────────── النشر ─────────── */
+function untilDate(days){
+  if (days < 0) return null;
+  const d = new Date(); d.setDate(d.getDate()+days);
+  return d.toISOString().slice(0,10);
+}
+
+async function publish(){
+  const title = $('title').value.trim();
+  if (!title) { $('msg').innerHTML = '<div class="err">العنوان مطلوب.</div>'; return; }
+  const inApp = $('inApp').checked, doPush = $('push').checked;
+  if (!inApp && !doPush) { $('msg').innerHTML = '<div class="err">اختر قناةً واحدة على الأقلّ.</div>'; return; }
+
+  $('publish').disabled = true;
+  $('msg').innerHTML = '<div class="note">يُنشر…</div>';
+
+  const row = {
+    title,
+    body: $('body').value.trim() || null,
+    subtitle: $('subtitle').value.trim() || null,
+    kind, style,
+    image_url: imageUrl && !imageUrl.startsWith('blob:') ? imageUrl : null,
+    route: $('route').value || null,
+    until: inApp ? untilDate(durDays) : null,
+    active: inApp,
+    created_by: user.id,
+  };
+
+  const { error } = await sb.from('app_announcements').insert(row);
+  if (error) {
+    const denied = error.code === '42501' || /row-level security/i.test(error.message||'');
+    $('msg').innerHTML = '<div class="err">'+(denied
+      ? 'رفضته قاعدة البيانات — حسابك ليس في جدول المشرفين.'
+      : esc(error.message))+'</div>';
+    $('publish').disabled = false;
+    return;
+  }
+
+  const parts = [];
+  if (inApp) parts.push(row.until ? `يظهر داخل التطبيق حتى ${row.until}` : 'يظهر داخل التطبيق بلا نهاية');
+  if (doPush){
+    const list = await tokens();
+    if (!list.length) parts.push('بلا إشعار فوري — سيُنبّه كل جهاز نفسه عند فتحه');
+    else {
+      const r = await sendPush(list, { title, subtitle:row.subtitle, body:row.body, route:row.route });
+      if (r.error) parts.push(`تعذّر الإشعار الفوري (${r.error}) — لكن كل جهاز سيُنبّه نفسه عند فتحه`);
+      else parts.push(`وصل إشعارًا إلى ${r.sent} جهازًا${r.failed?` (تعذّر ${r.failed})`:''}`);
+    }
+  }
+
+  $('msg').innerHTML = '<div class="ok">نُشر ✓ — '+esc(parts.join(' · '))+'</div>';
+  $('title').value=''; $('body').value=''; $('subtitle').value='';
+  imageUrl=''; $('file').value=''; $('imgState').innerHTML='';
+  render(); loadList();
+  $('publish').disabled = false;
+}
+
+/* ─────────── المنشور ─────────── */
+async function loadList(){
+  const { data, error } = await sb.from('app_announcements')
+    .select('id,title,kind,style,until,active,created_at')
+    .order('created_at',{ascending:false}).limit(30);
+  if (error) { $('list').innerHTML = `<tr><td colspan="6" class="note">${esc(error.message)}</td></tr>`; return; }
+  if (!data.length) { $('list').innerHTML = '<tr><td colspan="6" class="note">لم يُنشر شيء بعد.</td></tr>'; return; }
+  const today = new Date().toISOString().slice(0,10);
+  $('list').innerHTML = data.map(a => {
+    const k = KINDS.find(x=>x.id===a.kind) ?? KINDS[0];
+    const live = a.active && (!a.until || a.until >= today);
+    return `<tr>
+      <td style="font-weight:600">${esc(a.title)}</td>
+      <td><span class="pill" style="background:${k.soft};color:${k.tint}">${k.label}</span></td>
+      <td class="note">${a.style==='board'?'لوحة':'شريط'}</td>
+      <td class="note">${a.until ? esc(a.until) : 'بلا نهاية'}</td>
+      <td>${live
+        ? '<span class="pill" style="background:var(--sageSoft);color:var(--sage)">ظاهر</span>'
+        : '<span class="pill" style="background:var(--panel2);color:var(--muted)">منتهٍ</span>'}</td>
+      <td>${live ? `<button class="danger" data-off="${a.id}" style="padding:6px 12px;min-height:0;font-size:12.5px">إيقاف</button>` : ''}</td>
+    </tr>`;
+  }).join('');
+  $('list').onclick = async (e) => {
+    const id = e.target.dataset.off;
+    if (!id) return;
+    e.target.disabled = true;
+    await sb.from('app_announcements').update({ active:false }).eq('id', id);
+    loadList();
+  };
+}
+
+/* ─────────── تشغيل ─────────── */
+$('cfgUrl').value = cfg.url;
+$('cfgKey').value = cfg.key;
+boot();
+</script>
+</body>
+</html>
