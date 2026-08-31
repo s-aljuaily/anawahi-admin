@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="light">
 <title>غرفة البثّ · أنا و هي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,53 +20,58 @@
    بأدواتها، وصاحبها ينشر نادرًا في لحظة يريدها مركّزة.
    ═══════════════════════════════════════════════════════════════ */
 
+/*
+ * الألوان مأخوذة من التطبيق نفسه لا من عكسه: من ينشر يجب أن يرى ما يُشبه ما
+ * سيراه الناس. والنهار قرار مشهد: الناشر يكتب في وضح النهار، والمرقاب يجب أن
+ * يُقرأ كما يُقرأ الجوّال في يده.
+ */
 :root{
-  --console:#131020;
-  --panel:#1A1629;
-  --raised:#221D36;
-  --sunken:#0E0C18;
-  --rule:#2B2542;
-  --rule-soft:#221D36;
+  --ground:#F2F0F8;
+  --sheet:#FFFFFF;
+  --sunken:#F7F6FB;
+  --rule:#E6E3F0;
+  --rule-soft:#EFEDF6;
 
-  --ink:#F0EDFA;
-  --ink-2:#C4BEDC;
-  --dim:#9791B4;
+  --ink:#241F3B;
+  --ink-2:#4C4569;
+  --dim:#655D80;
 
-  /* الإشارات — الجرأة كلّها في «على الهواء» */
-  --live:#FF6E8A;
-  --live-dim:#7A2A40;
-  --armed:#F2B25C;
-  --armed-dim:#5A3F18;
-  --ok:#7FD68F;
-  --ok-dim:#1F4028;
-  --plum:#9B8BE8;
-  --plum-dim:#2E2653;
+  /* هوية التطبيق — نفس القيم الموجودة في theme.ts */
+  --plum:#5B4BAE;
+  --plum-2:#8D7FD6;
+  --plum-soft:#EFEBFB;
+  --live:#BE2F52;
+  --live-soft:#FCE4EA;
+  --armed:#B8721A;
+  --armed-soft:#FBEFDA;
+  --ok:#4F8C3B;
+  --ok-soft:#E6F2DF;
 
   --display:'Readex Pro','IBM Plex Sans Arabic',system-ui,sans-serif;
   --body:'IBM Plex Sans Arabic','Readex Pro',system-ui,sans-serif;
   --meter:'IBM Plex Mono',ui-monospace,monospace;
 
-  --r:12px; --r-lg:18px;
-  --lift:0 14px 26px -16px rgba(0,0,0,.92), 0 2px 5px -2px rgba(0,0,0,.55);
+  --r:12px; --r-lg:20px;
+  --lift:0 12px 28px -18px rgba(36,31,59,.4), 0 2px 6px -3px rgba(36,31,59,.14);
 }
 
 *{box-sizing:border-box}
-html{scrollbar-color:var(--rule) var(--console);scrollbar-width:thin}
+html{scrollbar-color:var(--rule) var(--ground);scrollbar-width:thin}
 ::-webkit-scrollbar{width:11px;height:11px}
-::-webkit-scrollbar-track{background:var(--console)}
-::-webkit-scrollbar-thumb{background:var(--rule);border-radius:99px;border:3px solid var(--console)}
-::-webkit-scrollbar-thumb:hover{background:#3A3255}
-::selection{background:var(--plum);color:#0B0914}
+::-webkit-scrollbar-track{background:var(--ground)}
+::-webkit-scrollbar-thumb{background:var(--rule);border-radius:99px;border:3px solid var(--ground)}
+::-webkit-scrollbar-thumb:hover{background:#CFC9E4}
+::selection{background:var(--plum);color:#FFFFFF}
 :focus-visible{outline:2px solid var(--plum);outline-offset:2px;border-radius:4px}
 
 body{
-  margin:0;background:var(--console);color:var(--ink);
+  margin:0;background:var(--ground);color:var(--ink);
   font-family:var(--body);font-size:15px;line-height:1.7;
   -webkit-font-smoothing:antialiased;
   caret-color:var(--plum);
   background-image:
-    radial-gradient(120% 70% at 78% -10%, rgba(155,139,232,.10), transparent 62%),
-    radial-gradient(90% 55% at 8% 105%, rgba(255,110,138,.055), transparent 60%);
+    radial-gradient(115% 62% at 80% -12%, rgba(141,127,214,.16), transparent 60%),
+    radial-gradient(85% 50% at 6% 106%, rgba(238,111,146,.09), transparent 58%);
   background-attachment:fixed;
 }
 
@@ -86,34 +91,34 @@ p{margin:0}
 .dim--prose{max-width:64ch}
 .num{font-family:var(--meter);font-variant-numeric:tabular-nums;direction:ltr;display:inline-block}
 
-.shell{max-width:1340px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 132px}
+.shell{max-width:1400px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 148px}
 
 .top{
   display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  padding:22px 0 18px;border-bottom:1px solid var(--rule);margin-bottom:28px;
+  padding:30px 0 24px;border-bottom:1px solid var(--rule);margin-bottom:12px;
 }
 .mark{
   width:42px;height:42px;border-radius:13px;flex:0 0 auto;
   background:linear-gradient(150deg,#3B2F73,#6B5AC4);
   display:grid;place-items:center;color:#fff;
-  box-shadow:0 6px 14px -8px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.18);
+  box-shadow:0 6px 14px -8px rgba(36,31,59,.4), inset 0 1px 0 rgba(255,255,255,.22);
 }
 .top h1{line-height:1.25}
 .top .dim{font-size:13px;margin-top:1px}
 .top-end{margin-inline-start:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
-.desk{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:clamp(20px,3vw,40px);align-items:start}
+.desk{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:clamp(28px,5vw,72px);align-items:start}
 @media(max-width:1060px){.desk{grid-template-columns:1fr}.monitor{position:static;max-width:392px}}
 
 /* مقاطع يفصلها خطّ — لا بطاقات متساوية تتنافس على الانتباه */
-.bay{padding:26px 0;border-bottom:1px solid var(--rule-soft)}
+.bay{padding:36px 0;border-bottom:1px solid var(--rule-soft)}
 .bay:first-child{padding-top:0}
 .bay:last-child{border-bottom:0}
-.bay-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.bay-head{display:flex;align-items:baseline;gap:12px;margin-bottom:22px;flex-wrap:wrap}
 .bay-head h2{flex:0 0 auto}
 .bay-head .dim{font-size:13px}
 
-.field{margin-bottom:20px}
+.field{margin-bottom:26px}
 .field:last-child{margin-bottom:0}
 .field-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .field-top .label,.field-top .label--ar{flex:1}
@@ -124,9 +129,9 @@ input[type=text],input[type=email],textarea,select{
   padding:13px 15px;font-family:inherit;font-size:15px;line-height:1.6;
   transition:border-color .16s ease,background .16s ease;
 }
-input::placeholder,textarea::placeholder{color:#6E6790}
-input:hover,textarea:hover,select:hover{border-color:#3A3255}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--plum);background:#0B0914}
+input::placeholder,textarea::placeholder{color:#9A93B4}
+input:hover,textarea:hover,select:hover{border-color:#CFC9E4}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--plum);background:#FFFFFF}
 textarea{min-height:104px;resize:vertical}
 select{appearance:none;cursor:pointer}
 
@@ -139,16 +144,16 @@ select{appearance:none;cursor:pointer}
 .keys{display:flex;gap:8px;flex-wrap:wrap}
 .key{
   display:inline-flex;align-items:center;gap:7px;
-  background:var(--raised);border:1px solid var(--rule);color:var(--dim);
+  background:var(--sunken);border:1px solid var(--rule);color:var(--dim);
   border-radius:10px;padding:9px 14px;min-height:42px;cursor:pointer;
   font-family:inherit;font-size:13px;font-weight:500;
   transition:border-color .16s ease,color .16s ease,background .16s ease;
 }
-.key:hover{border-color:#3F3760;color:var(--ink-2)}
-.key[aria-pressed="true"]{background:var(--plum-dim);border-color:var(--plum);color:var(--ink)}
-.key[aria-pressed="true"][data-tone=armed]{background:var(--armed-dim);border-color:var(--armed);color:#FFDCA8}
-.key[aria-pressed="true"][data-tone=ok]{background:var(--ok-dim);border-color:var(--ok);color:#CBF1D2}
-.key[aria-pressed="true"][data-tone=live]{background:var(--live-dim);border-color:var(--live);color:#FFCCD7}
+.key:hover{border-color:var(--plum-2);color:var(--ink-2)}
+.key[aria-pressed="true"]{background:var(--plum-soft);border-color:var(--plum);color:var(--ink)}
+.key[aria-pressed="true"][data-tone=armed]{background:var(--armed-soft);border-color:var(--armed);color:#7A4C10}
+.key[aria-pressed="true"][data-tone=ok]{background:var(--ok-soft);border-color:var(--ok);color:#2F5A22}
+.key[aria-pressed="true"][data-tone=live]{background:var(--live-soft);border-color:var(--live);color:#8E2A44}
 .key .i{width:15px;height:15px}
 
 .toggle{display:flex;align-items:center;gap:14px;padding:14px 0;cursor:pointer}
@@ -161,10 +166,10 @@ select{appearance:none;cursor:pointer}
 }
 .sw::after{
   content:"";position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;
-  background:#5F5880;transition:transform .18s cubic-bezier(.2,0,0,1),background .18s ease;
+  background:#B7B0CC;transition:transform .18s cubic-bezier(.2,0,0,1),background .18s ease;
 }
 input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
-input[type=checkbox]:checked + .sw{background:var(--plum-dim);border-color:var(--plum)}
+input[type=checkbox]:checked + .sw{background:var(--plum-soft);border-color:var(--plum)}
 input[type=checkbox]:checked + .sw::after{transform:translateX(-19px);background:var(--plum)}
 input[type=checkbox]:focus-visible + .sw{outline:2px solid var(--plum);outline-offset:2px}
 
@@ -173,33 +178,66 @@ input[type=checkbox]:focus-visible + .sw{outline:2px solid var(--plum);outline-o
 .monitor-head .label{flex:1}
 
 .bezel{
-  border:11px solid #262040;border-radius:34px;overflow:hidden;
+  border:12px solid #221D36;border-radius:40px;overflow:hidden;
   box-shadow:var(--lift), 0 0 0 1px rgba(255,255,255,.05);
 }
 .glass{
-  background:linear-gradient(180deg,#2E2748 0%,#1B1730 42%,#161327 100%);
-  padding:46px 13px 15px;min-height:452px;border:0;
+  background:linear-gradient(172deg,#4B3E86 0%,#6B5AB8 34%,#9E7FB4 100%);
+  padding:44px 13px 16px;min-height:560px;border:0;
   display:flex;flex-direction:column;gap:13px;position:relative;overflow:hidden;
 }
 .glass::before{
   content:"";position:absolute;top:13px;left:50%;transform:translateX(-50%);
-  width:74px;height:17px;border-radius:99px;background:#0B0914;
+  width:74px;height:17px;border-radius:99px;background:#FFFFFF;
 }
 
+/* لسانا المرقاب — مشهدان لا يُخلطان: ما يصل والجهاز مقفل، وما يبقى داخل التطبيق */
+.tabs{display:flex;gap:4px;background:var(--sunken);border:1px solid var(--rule);border-radius:11px;padding:3px;width:100%}
+.tab{
+  flex:1;background:transparent;border-radius:8px;padding:8px 10px;min-height:36px;
+  font-family:inherit;font-size:13px;font-weight:600;color:var(--dim);
+  transition:background .16s ease,color .16s ease;
+}
+.tab:hover:not(:disabled){color:var(--ink-2)}
+.tab:disabled{cursor:not-allowed}
+.tab[aria-pressed="true"]{background:var(--sheet);color:var(--ink);box-shadow:0 1px 3px rgba(36,31,59,.14)}
+
+/* ساعة شاشة القفل */
+.lockclock{text-align:center;color:#fff;margin:16px 0 22px;text-shadow:0 1px 14px rgba(0,0,0,.3)}
+.lc-date{display:block;font-size:13px;font-weight:500;opacity:.94}
+.lc-time{display:block;font-family:var(--display);font-size:58px;font-weight:300;line-height:1.04;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+
+/* شاشة التطبيق — خلفيته وترويسته الحقيقيّتان، فيُرى الإعلان في موضعه لا معزولًا */
+.screen-app{
+  background:#F6F5FA;min-height:560px;padding:52px 16px 18px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.app-bar{display:flex;flex-direction:column;gap:2px;margin-bottom:2px}
+.app-greet{font-size:11px;color:#736C8E}
+.app-name{font-family:var(--display);font-size:21px;font-weight:700;color:#241F3B;line-height:1.2}
+.app-ghost{background:#fff;border-radius:15px;padding:14px;display:flex;flex-direction:column;gap:9px;box-shadow:0 2px 8px -5px rgba(36,31,59,.25)}
+.app-ghost span{height:9px;border-radius:99px;background:#EFEDF6}
+.app-ghost span:first-child{width:52%}
+.app-ghost span:nth-child(2){width:78%}
+.app-ghost--wide span:nth-child(3){width:34%}
+.app-note{margin-top:auto;text-align:center;font-size:11px;color:#8B84A6}
+
+/* بطاقة إشعار iOS — مادّة زجاجية فوق ورق الجدار، لا مربّع أبيض معلّق */
 .notif{
-  background:rgba(248,246,255,.94);color:#141024;border-radius:17px;padding:12px;
+  background:rgba(255,255,255,.82);backdrop-filter:blur(22px) saturate(1.7);
+  color:var(--ink);border-radius:19px;padding:12px 13px;
   display:flex;gap:10px;
-  box-shadow:0 8px 22px -14px rgba(0,0,0,.7);
+  box-shadow:0 10px 26px -16px rgba(0,0,0,.5);
 }
 .notif-ico{
   width:33px;height:33px;border-radius:9px;flex:0 0 auto;
-  background:linear-gradient(150deg,#5B4BAE,#8D7FD6);display:grid;place-items:center;color:#fff;
+  display:grid;place-items:center;color:#fff;
 }
-.notif-meta{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:#3B3454}
-.notif-meta .t{margin-inline-start:auto;font-family:var(--meter);color:#5F5880;font-weight:400}
-.notif h3{font-family:var(--display);font-size:15px;font-weight:600;color:#100D1E;margin-top:2px;letter-spacing:-.01em}
-.notif .sub{font-size:13px;color:#3B3454}
-.notif .txt{font-size:13px;color:#332E4C;line-height:1.55;margin-top:1px}
+.notif-meta{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:var(--ink-2)}
+.notif-meta .t{margin-inline-start:auto;font-family:var(--meter);color:#B7B0CC;font-weight:400}
+.notif h3{font-family:var(--display);font-size:15px;font-weight:600;color:var(--ink);margin-top:2px;letter-spacing:-.01em}
+.notif .sub{font-size:13px;color:var(--ink-2)}
+.notif .txt{font-size:13px;color:var(--ink-2);line-height:1.55;margin-top:1px}
 .notif #pvImgSlot img{width:100%;height:92px;object-fit:cover;border-radius:10px;margin-top:8px}
 
 .inapp{background:#F4F2FA;margin:0 -13px;padding:13px;color:#241F3B}
@@ -216,11 +254,11 @@ input[type=checkbox]:focus-visible + .sw{outline:2px solid var(--plum);outline-o
 .board-kind{font-size:11px;font-weight:700;margin-bottom:3px}
 .board h3{font-family:var(--display);font-size:15px;font-weight:600;color:#171232}
 .board p{font-size:13px;color:#443E5E;margin-top:3px}
-.glass-note{margin-top:auto;text-align:center;font-size:11px;color:rgba(240,237,250,.5)}
+.glass-note{margin-top:auto;text-align:center;font-size:11px;color:rgba(255,255,255,.72)}
 
 .transmit{
   position:fixed;inset-inline:0;bottom:0;z-index:40;
-  background:rgba(19,16,32,.92);backdrop-filter:blur(18px) saturate(1.3);
+  background:rgba(255,255,255,.86);backdrop-filter:blur(20px) saturate(1.4);
   border-top:1px solid var(--rule);
 }
 .transmit-in{
@@ -229,7 +267,7 @@ input[type=checkbox]:focus-visible + .sw{outline:2px solid var(--plum);outline-o
 }
 .lamp{display:flex;align-items:center;gap:11px;flex:0 0 auto}
 .bulb{
-  width:11px;height:11px;border-radius:50%;background:#4C4468;position:relative;flex:0 0 auto;
+  width:11px;height:11px;border-radius:50%;background:#C9C3DC;position:relative;flex:0 0 auto;
   transition:background .2s ease,box-shadow .2s ease;
 }
 .bulb.armed{background:var(--armed);box-shadow:0 0 0 4px rgba(242,178,92,.16)}
@@ -247,37 +285,37 @@ input[type=checkbox]:focus-visible + .sw{outline:2px solid var(--plum);outline-o
 .lamp-txt b{display:block;font-family:var(--meter);font-size:11px;letter-spacing:.14em;color:var(--ink-2);direction:ltr;text-align:right}
 .lamp-txt span{font-size:11px;color:var(--dim)}
 .transmit-msg{flex:1;min-width:180px;font-size:13px;color:var(--ink-2)}
-.transmit-msg.err{color:#FFB8C5}
-.transmit-msg.ok{color:#BFEBC9}
+.transmit-msg.err{color:var(--live)}
+.transmit-msg.ok{color:var(--ok)}
 
 button{font-family:inherit;cursor:pointer;border:0}
 .go{
   display:inline-flex;align-items:center;gap:9px;
-  background:linear-gradient(160deg,#6A56C8,#4F4098);color:#fff;
+  background:linear-gradient(160deg,#6A56C8,#4B3D96);color:#fff;
   font-family:var(--display);font-size:15px;font-weight:600;
   border-radius:13px;padding:0 26px;min-height:50px;
-  box-shadow:0 12px 26px -14px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.2);
+  box-shadow:0 12px 24px -12px rgba(91,75,174,.55), inset 0 1px 0 rgba(255,255,255,.24);
   transition:transform .14s cubic-bezier(.2,0,0,1),box-shadow .18s ease,filter .18s ease;
 }
-.go:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 18px 34px -16px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.26)}
+.go:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 16px 30px -12px rgba(91,75,174,.6), inset 0 1px 0 rgba(255,255,255,.3)}
 .go:active:not(:disabled){transform:translateY(0)}
 .go:disabled{filter:grayscale(.75);opacity:.45;cursor:not-allowed;box-shadow:none}
 .go .i{width:17px;height:17px}
 
 .btn{
   display:inline-flex;align-items:center;gap:7px;
-  background:var(--raised);border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--sunken);border:1px solid var(--rule);color:var(--ink-2);
   border-radius:10px;padding:0 15px;min-height:40px;font-size:13px;font-weight:500;
   transition:border-color .16s ease,color .16s ease;
 }
-.btn:hover{border-color:#3F3760;color:var(--ink)}
+.btn:hover{border-color:var(--plum-2);color:var(--ink)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .btn .i{width:15px;height:15px}
 .btn--quiet{background:transparent}
-.btn--live{color:#FFB8C5}
-.btn--live:hover{border-color:var(--live);color:#FFCCD7}
+.btn--live{color:var(--live)}
+.btn--live:hover{border-color:var(--live);color:#8E2A44}
 
-.log{margin-top:44px;border-top:1px solid var(--rule);padding-top:26px}
+.log{margin-top:56px;border-top:1px solid var(--rule);padding-top:34px}
 .log-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .log-head h2{flex:1}
 .tw{overflow-x:auto}
@@ -287,15 +325,20 @@ th{
   font-weight:500;text-align:right;padding:0 14px 10px;white-space:nowrap;direction:ltr;
 }
 th:first-child{direction:rtl;font-family:var(--body);font-size:11px;letter-spacing:.02em}
-td{padding:13px 14px;border-top:1px solid var(--rule-soft);vertical-align:middle}
+td{padding:16px 14px;border-top:1px solid var(--rule-soft);vertical-align:middle}
 tbody tr{transition:background .16s ease}
-tbody tr:hover{background:var(--panel)}
+tbody tr:hover{background:var(--sheet)}
 .tag{
   display:inline-flex;align-items:center;gap:5px;
   font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;border:1px solid;
 }
+.seen{display:flex;flex-direction:column;gap:5px;min-width:78px}
+.seen-n{font-size:14px;font-weight:600;color:var(--ink)}
+.seen-of{color:var(--dim);font-weight:400;font-size:11px}
+.seen-bar{display:block;height:4px;border-radius:99px;background:var(--rule);overflow:hidden}
+.seen-bar i{display:block;height:100%;border-radius:99px;background:var(--plum);transition:width .4s cubic-bezier(.2,0,0,1)}
 .row-new{animation:settle .8s cubic-bezier(.16,1,.3,1)}
-@keyframes settle{ from{background:var(--plum-dim)} to{background:transparent} }
+@keyframes settle{ from{background:var(--plum-soft)} to{background:transparent} }
 
 .gate{max-width:460px;margin:clamp(40px,9vh,90px) auto;text-align:center}
 .gate h2{font-size:21px;margin-bottom:6px}
@@ -304,7 +347,7 @@ tbody tr:hover{background:var(--panel)}
 .empty .i{width:30px;height:30px;opacity:.5;margin-bottom:8px}
 
 .slab{
-  background:var(--panel);border:1px solid var(--rule);border-radius:var(--r-lg);
+  background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-lg);
   padding:20px;
 }
 .warn-note{display:flex;gap:11px;margin:18px 0;align-items:flex-start}
@@ -314,13 +357,13 @@ tbody tr:hover{background:var(--panel)}
 code{
   font-family:var(--meter);font-size:13px;direction:ltr;display:inline-block;
   background:var(--sunken);border:1px solid var(--rule);
-  padding:2px 7px;border-radius:6px;color:#CFC8E8;
+  padding:2px 7px;border-radius:6px;color:var(--ink-2);
 }
 pre{
   font-family:var(--meter);font-size:11px;direction:ltr;text-align:left;
   background:var(--sunken);border:1px solid var(--rule);border-radius:var(--r);
   padding:13px;margin:10px 0 0;white-space:pre-wrap;line-height:1.65;
-  color:#CFC8E8;overflow-x:auto;
+  color:var(--ink-2);overflow-x:auto;
 }
 a{color:var(--plum);text-underline-offset:3px;text-decoration-thickness:1px}
 .hide{display:none!important}
@@ -498,13 +541,20 @@ a{color:var(--plum);text-underline-offset:3px;text-decoration-thickness:1px}
 
       <aside class="monitor">
         <div class="monitor-head">
-          <span class="label">Monitor</span>
-          <span class="dim" style="font-size:11px">ما سيصلهم حرفًا بحرف</span>
+          <div class="tabs" role="tablist">
+            <button type="button" class="tab" data-view="lock" aria-pressed="true">شاشة القفل</button>
+            <button type="button" class="tab" data-view="app" aria-pressed="false">داخل التطبيق</button>
+          </div>
         </div>
         <div class="bezel">
-          <div class="glass">
+          <!-- مشهد ١: شاشة القفل — ورقٌ للجدار وساعة وبطاقة إشعار زجاجية -->
+          <div class="glass" id="viewLock">
+            <div class="lockclock">
+              <span class="lc-date" id="lcDate"></span>
+              <span class="lc-time" id="lcTime"></span>
+            </div>
             <div class="notif" id="pvNotif">
-              <div class="notif-ico"><svg class="i" style="width:17px;height:17px"><use href="#i-heart"/></svg></div>
+              <div class="notif-ico" id="pvIco"><svg class="i" style="width:17px;height:17px"><use href="#i-info"/></svg></div>
               <div style="flex:1;min-width:0">
                 <div class="notif-meta"><span>أنا &amp; هي</span><span class="t">الآن</span></div>
                 <h3 id="pvTitle">عنوان الإعلان</h3>
@@ -513,8 +563,19 @@ a{color:var(--plum);text-underline-offset:3px;text-decoration-thickness:1px}
                 <div id="pvImgSlot"></div>
               </div>
             </div>
-            <div class="inapp" id="pvInApp"></div>
-            <p class="glass-note" id="pvNote"></p>
+            <p class="glass-note" id="pvNoteLock"></p>
+          </div>
+
+          <!-- مشهد ٢: الرئيسية كما هي في التطبيق — الإعلان في موضعه الحقيقي أعلاها -->
+          <div class="screen-app hide" id="viewApp">
+            <div class="app-bar">
+              <span class="app-greet">مساء الخير · <span id="appDate"></span></span>
+              <span class="app-name">سليمان</span>
+            </div>
+            <div id="pvInApp"></div>
+            <div class="app-ghost"><span></span><span></span></div>
+            <div class="app-ghost app-ghost--wide"><span></span><span></span><span></span></div>
+            <p class="app-note" id="pvNoteApp"></p>
           </div>
         </div>
       </aside>
@@ -527,7 +588,7 @@ a{color:var(--plum);text-underline-offset:3px;text-decoration-thickness:1px}
       </div>
       <div class="tw">
         <table>
-          <thead><tr><th>العنوان</th><th>Kind</th><th>Form</th><th>Until</th><th>State</th><th></th></tr></thead>
+          <thead><tr><th>العنوان</th><th>Kind</th><th>Form</th><th>Seen</th><th>Until</th><th>State</th><th></th></tr></thead>
           <tbody id="list"></tbody>
         </table>
       </div>
@@ -566,17 +627,17 @@ const DEFAULTS = {
 };
 
 const KINDS = [
-  { id:'info', label:'خبر',   icon:'i-info',  tone:'',      c:'#5B4BAE', soft:'#EFEBFB' },
-  { id:'good', label:'تهنئة', icon:'i-spark', tone:'ok',    c:'#4F8C3B', soft:'#E6F2DF' },
-  { id:'warn', label:'انتبه', icon:'i-alert', tone:'armed', c:'#B8721A', soft:'#FBEFDA' },
-  { id:'love', label:'تحفيز', icon:'i-heart', tone:'live',  c:'#C9425F', soft:'#FCE4EA' },
+  { id:'info', label:'خبر',   icon:'i-info',  tone:'',      c:'#5B4BAE', c2:'#8D7FD6', soft:'#EFEBFB' },
+  { id:'good', label:'تهنئة', icon:'i-spark', tone:'ok',    c:'#4F8C3B', c2:'#7FB56B', soft:'#E6F2DF' },
+  { id:'warn', label:'انتبه', icon:'i-alert', tone:'armed', c:'#B8721A', c2:'#F0A94E', soft:'#FBEFDA' },
+  { id:'love', label:'تحفيز', icon:'i-heart', tone:'live',  c:'#C9425F', c2:'#EE6F92', soft:'#FCE4EA' },
 ];
 const STYLES = [{ id:'strip', label:'شريط' }, { id:'board', label:'لوحة' }];
 const DURS = [{ d:0, label:'اليوم' }, { d:2, label:'٣ أيام' }, { d:6, label:'أسبوع' }, { d:29, label:'شهر' }, { d:-1, label:'بلا نهاية' }];
 const LIMITS = { title:60, body:178 };
 
 let sb=null, user=null, deviceCount=0;
-let kind='info', style='strip', durDays=6, imageUrl='';
+let kind='info', style='strip', durDays=6, imageUrl='', view='lock';
 
 let memUrl='', memKey='';
 const get = (k) => { try { return localStorage.getItem(k) || ''; } catch { return ''; } };
@@ -604,7 +665,7 @@ async function boot(){
     return;
   }
   show('app'); show('transmit');
-  buildKeys(); bind(); render(); loadLog(); probePush();
+  buildKeys(); bind(); clock(); setInterval(clock, 20000); render(); loadLog(); probePush();
 }
 
 function buildKeys(){
@@ -630,9 +691,39 @@ function bind(){
   $('dropImg').onclick = () => { imageUrl=''; $('file').value=''; $('imgState').textContent=''; show('dropImg',false); render(); };
   $('publish').onclick = publish;
   $('reload').onclick = () => loadLog();
+  document.querySelector('.tabs').onclick = e => {
+    const b = e.target.closest('[data-view]'); if (!b) return;
+    view = b.dataset.view;
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-pressed', String(t.dataset.view===view)));
+    show('viewLock', view==='lock'); show('viewApp', view==='app');
+  };
 }
 
 const clamp = (t,n) => { t=(t||'').trim(); return t.length<=n ? {s:t,cut:false} : {s:t.slice(0,n).trimEnd()+'…',cut:true}; };
+
+/** ساعة شاشة القفل — الوقت الحقيقي، فالمعاينة تُشبه ما سيراه لا صورةً عامّة */
+function clock(){
+  const d = new Date();
+  const date = d.toLocaleDateString('ar-SA-u-ca-gregory-nu-arab',{weekday:'long',day:'numeric',month:'long'});
+  $('lcTime').textContent = d.toLocaleTimeString('ar-SA-u-nu-latn',{hour:'2-digit',minute:'2-digit',hour12:false});
+  $('lcDate').textContent = date;
+  $('appDate').textContent = date;
+}
+
+/** يبدّل اللسان تلقائيًّا إلى المشهد الذي يعنيه ما أطفأتَه أو أشعلتَه */
+function syncView(){
+  const inApp = $('inApp').checked, doPush = $('push').checked;
+  if (view === 'lock' && !doPush && inApp) view = 'app';
+  if (view === 'app' && !inApp && doPush) view = 'lock';
+  document.querySelectorAll('.tab').forEach(t => {
+    const on = t.dataset.view === view;
+    t.setAttribute('aria-pressed', String(on));
+    t.disabled = (t.dataset.view === 'lock' && !doPush) || (t.dataset.view === 'app' && !inApp);
+    t.style.opacity = t.disabled ? '.45' : '';
+  });
+  show('viewLock', view === 'lock');
+  show('viewApp', view === 'app');
+}
 
 function render(){
   const rawT = $('title').value, rawB = $('body').value;
@@ -645,7 +736,9 @@ function render(){
   $('gBody').textContent = `${rawB.length}/${LIMITS.body}`;
   $('gBody').className = 'gauge' + (rawB.length > LIMITS.body ? ' over' : rawB.length > LIMITS.body*0.85 ? ' warn' : '');
 
-  show('pvNotif', doPush);
+  // الإشعار الحقيقي يحمل أيقونة نوعه ولونه — لا شكلًا واحدًا مهما اخترتَ
+  $('pvIco').style.background = `linear-gradient(150deg,${k.c},${k.c2})`;
+  $('pvIco').innerHTML = `<svg class="i" style="width:17px;height:17px"><use href="#${k.icon}"/></svg>`;
   $('pvTitle').textContent = t.s || 'عنوان الإعلان';
   $('pvSub').textContent = s.s;
   $('pvBody').textContent = b.s;
@@ -658,7 +751,7 @@ function render(){
     ? `<div class="strip" style="background:${k.soft};border-color:${k.c}44;color:#241F3B">
          <span class="dot" style="background:${k.c}"><svg class="i"><use href="#${k.icon}"/></svg></span>
          <span class="txt">${esc(b.s ? title+' — '+b.s : title)}</span>
-         <svg class="i" style="width:14px;height:14px;color:#5F5880"><use href="#i-x"/></svg>
+         <svg class="i" style="width:14px;height:14px;color:#B7B0CC"><use href="#i-x"/></svg>
        </div>`
     : `<div class="board" style="border-color:${k.c}3A">
          ${imageUrl ? `<img src="${esc(imageUrl)}" alt="">` : ''}
@@ -669,12 +762,13 @@ function render(){
        </div>`;
 
   const cut = t.cut || b.cut || s.cut;
-  $('pvNote').textContent = (!doPush && !inApp) ? 'بلا قناة — لن يصل ولن يظهر'
+  $('pvNoteLock').textContent = !doPush ? 'الإشعار مُطفأ — لن يصل شيء على شاشة القفل'
     : cut ? 'ما بعد النقاط لا يُقرأ إلا بفتح الإشعار'
-    : (doPush && inApp) ? 'يظهر داخل التطبيق ويصل إشعارًا'
-    : doPush ? 'إشعار فقط — لا يبقى داخل التطبيق'
-    : 'داخل التطبيق فقط — بلا إزعاج';
+    : 'ينبّه فورًا ثم يزول';
+  $('pvNoteApp').textContent = !inApp ? 'العرض داخل التطبيق مُطفأ'
+    : `يبقى ${DURS.find(x=>x.d===durDays)?.label ?? ''} ثم يختفي وحده`;
 
+  syncView();
   arm();
 }
 
@@ -797,14 +891,37 @@ async function publish(){
   setTimeout(() => { if ($('bulb').classList.contains('live')) arm(); }, 4200);
 }
 
-async function loadLog(fresh){
-  const { data, error } = await sb.from('app_announcements')
-    .select('id,title,kind,style,until,active,created_at')
-    .order('created_at',{ascending:false}).limit(30);
+/**
+ * كم شخصًا شاهد كل إعلان.
+ * صفٌّ لكل (إعلان، شخص) بمفتاح مركّب — فالرقم يعني «كم شخصًا» لا «كم مرّة».
+ * غياب الجدول لا يكسر السجلّ: تُعرض شرطة بدل رقم، والباقي يعمل.
+ */
+async function seenCounts(){
+  const { data, error } = await sb.from('app_announcement_views').select('announcement_id');
+  if (error || !data) return null;
+  const m = new Map();
+  for (const r of data) m.set(r.announcement_id, (m.get(r.announcement_id) ?? 0) + 1);
+  return m;
+}
 
-  if (error){ $('list').innerHTML = `<tr><td colspan="6" class="empty">${esc(error.message)}</td></tr>`; return; }
+/** عدد من يملكون التطبيق — القاسم الذي تُقاس عليه المشاهدة */
+async function audience(){
+  const { count, error } = await sb.from('profiles').select('id', { count:'exact', head:true });
+  return error ? null : (count ?? null);
+}
+
+async function loadLog(fresh){
+  const [{ data, error }, seen, total] = await Promise.all([
+    sb.from('app_announcements')
+      .select('id,title,kind,style,until,active,created_at')
+      .order('created_at',{ascending:false}).limit(30),
+    seenCounts(),
+    audience(),
+  ]);
+
+  if (error){ $('list').innerHTML = `<tr><td colspan="7" class="empty">${esc(error.message)}</td></tr>`; return; }
   if (!data.length){
-    $('list').innerHTML = `<tr><td colspan="6"><div class="empty">
+    $('list').innerHTML = `<tr><td colspan="7"><div class="empty">
       <svg class="i"><use href="#i-tower"/></svg>
       <p>لم يخرج شيء على الهواء بعد.</p></div></td></tr>`;
     return;
@@ -819,14 +936,14 @@ async function loadLog(fresh){
       <td><span class="tag" style="border-color:${k.c}66;color:${k.c === '#5B4BAE' ? 'var(--plum)' : k.c}">
             <svg class="i" style="width:12px;height:12px"><use href="#${k.icon}"/></svg>${k.label}</span></td>
       <td class="dim">${a.style==='board'?'لوحة':'شريط'}</td>
+      <td>${seenCell(seen, total, a.id)}</td>
       <td class="dim"><span class="num">${a.until ? esc(a.until) : '—'}</span></td>
       <td>${live
         ? '<span class="tag" style="border-color:#7FD68F55;color:var(--ok)">على الهواء</span>'
         : '<span class="tag" style="border-color:var(--rule);color:var(--dim)">انتهى</span>'}</td>
       <td style="text-align:left">${live
         ? `<button type="button" class="btn btn--live" data-off="${a.id}" style="min-height:34px;padding:0 12px;font-size:13px">
-             <svg class="i" style="width:13px;height:13px"><use href="#i-eye-off"/></svg>إيقاف</button>` : ''}</td>
-    </tr>`;
+             <svg class="i" style="width:13px;height:13px"><use href="#i-eye-off"/></svg>إيقاف</button>` : ''}</td>`;
   }).join('');
 
   $('list').onclick = async (e) => {
@@ -835,6 +952,21 @@ async function loadLog(fresh){
     await sb.from('app_announcements').update({ active:false }).eq('id', btn.dataset.off);
     loadLog();
   };
+}
+
+/**
+ * خليّة المشاهدة — رقم وشريط نسبة.
+ * الرقم وحده لا يقول شيئًا: «٤» تعني الكثير من عشرة والقليل من مئة. فالنسبة
+ * تُعرض معه دائمًا، والقاسم هو من يملك التطبيق فعلًا.
+ */
+function seenCell(seen, total, id){
+  if (!seen) return '<span class="dim">—</span>';
+  const n = seen.get(id) ?? 0;
+  const pct = total ? Math.round((n/total)*100) : 0;
+  return `<div class="seen">
+    <span class="num seen-n">${n}${total ? `<span class="seen-of">/${total}</span>` : ''}</span>
+    ${total ? `<span class="seen-bar"><i style="width:${Math.min(100,pct)}%"></i></span>` : ''}
+  </div>`;
 }
 
 $('openCfg').onclick = () => {
