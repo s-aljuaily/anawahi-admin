@@ -3,380 +3,592 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>منصّة إعلانات «أنا و هي»</title>
+<meta name="color-scheme" content="dark">
+<title>غرفة البثّ · أنا و هي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════════════════════════════
+   غرفة البثّ — لوحة نشر إعلانات «أنا و هي»
+
+   العالم: طاولة تحكّم إذاعية. النشر ليس حفظ صفّ في جدول — هو الخروج
+   على الهواء إلى أجهزة أناس حقيقيين. فالصفحة كونسول: مرقاب حيّ يريك
+   ما سيصل، ومفتاح إرسال واحد موزون، ومصباح يقول متى صرتَ على الهواء.
+
+   الظلام قرار من مشهد الاستعمال لا من فئة المنتج: طاولة تحكّم تُضاء
+   بأدواتها، وصاحبها ينشر نادرًا في لحظة يريدها مركّزة.
+   ═══════════════════════════════════════════════════════════════ */
+
 :root{
-  --bg:#F4F3F8; --panel:#fff; --panel2:#FAF9FD; --edge:#E4E1EF;
-  --ink:#1C1830; --ink2:#4A4364; --muted:#757090;
-  --plum:#5B4BAE; --plum2:#8D7FD6; --plumSoft:#EFEBFB;
-  --gold:#C77E1E; --goldSoft:#FBEFDA;
-  --rose:#D64A6C; --roseSoft:#FCE4EA;
-  --sage:#4F8C3B; --sageSoft:#E6F2DF;
-  --deep:#241F3B;
-  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --console:#131020;
+  --panel:#1A1629;
+  --raised:#221D36;
+  --sunken:#0E0C18;
+  --rule:#2B2542;
+  --rule-soft:#221D36;
+
+  --ink:#F0EDFA;
+  --ink-2:#C4BEDC;
+  --dim:#9791B4;
+
+  /* الإشارات — الجرأة كلّها في «على الهواء» */
+  --live:#FF6E8A;
+  --live-dim:#7A2A40;
+  --armed:#F2B25C;
+  --armed-dim:#5A3F18;
+  --ok:#7FD68F;
+  --ok-dim:#1F4028;
+  --plum:#9B8BE8;
+  --plum-dim:#2E2653;
+
+  --display:'Readex Pro','IBM Plex Sans Arabic',system-ui,sans-serif;
+  --body:'IBM Plex Sans Arabic','Readex Pro',system-ui,sans-serif;
+  --meter:'IBM Plex Mono',ui-monospace,monospace;
+
+  --r:12px; --r-lg:18px;
+  --lift:0 14px 26px -16px rgba(0,0,0,.92), 0 2px 5px -2px rgba(0,0,0,.55);
 }
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#131020; --panel:#1C1830; --panel2:#221D3A; --edge:#2E2848;
-    --ink:#EEEBF8; --ink2:#C2BCDC; --muted:#8F88AE;
-    --plum:#9B8BE8; --plum2:#6F60BE; --plumSoft:#241F3F;
-    --gold:#E9A44E; --goldSoft:#33260F;
-    --rose:#F07A99; --roseSoft:#351926;
-    --sage:#93C77E; --sageSoft:#1D2C17;
-  }
-}
+
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Tajawal',system-ui,sans-serif;font-size:15px;line-height:1.7}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
-h1{font-size:clamp(24px,4vw,34px);font-weight:900;margin:0}
-h2{font-size:17px;font-weight:800;margin:0}
-.sub{color:var(--muted);font-size:14px;margin-top:6px}
-header{padding:36px 0 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(140deg,#5B4BAE,#8D7FD6);display:grid;place-items:center;font-size:22px}
-.card{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:20px;margin-bottom:16px}
-label{display:block;font-weight:700;font-size:13.5px;margin-bottom:6px}
+html{scrollbar-color:var(--rule) var(--console);scrollbar-width:thin}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--console)}
+::-webkit-scrollbar-thumb{background:var(--rule);border-radius:99px;border:3px solid var(--console)}
+::-webkit-scrollbar-thumb:hover{background:#3A3255}
+::selection{background:var(--plum);color:#0B0914}
+:focus-visible{outline:2px solid var(--plum);outline-offset:2px;border-radius:4px}
+
+body{
+  margin:0;background:var(--console);color:var(--ink);
+  font-family:var(--body);font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  caret-color:var(--plum);
+  background-image:
+    radial-gradient(120% 70% at 78% -10%, rgba(155,139,232,.10), transparent 62%),
+    radial-gradient(90% 55% at 8% 105%, rgba(255,110,138,.055), transparent 60%);
+  background-attachment:fixed;
+}
+
+h1,h2,h3{font-family:var(--display);margin:0;font-weight:600;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:33px;font-weight:700;line-height:1.15}
+@media(max-width:640px){h1{font-size:25px}}
+h2{font-size:17px;font-weight:600}
+p{margin:0}
+
+.label{
+  font-family:var(--meter);font-size:11px;font-weight:500;
+  letter-spacing:.15em;color:var(--dim);text-transform:uppercase;
+  direction:ltr;text-align:right;
+}
+.label--ar{font-family:var(--body);letter-spacing:.02em;font-size:13px;text-transform:none;font-weight:600;color:var(--ink-2)}
+.dim{color:var(--dim);font-size:13px;line-height:1.65}
+.dim--prose{max-width:64ch}
+.num{font-family:var(--meter);font-variant-numeric:tabular-nums;direction:ltr;display:inline-block}
+
+.shell{max-width:1340px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 132px}
+
+.top{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:22px 0 18px;border-bottom:1px solid var(--rule);margin-bottom:28px;
+}
+.mark{
+  width:42px;height:42px;border-radius:13px;flex:0 0 auto;
+  background:linear-gradient(150deg,#3B2F73,#6B5AC4);
+  display:grid;place-items:center;color:#fff;
+  box-shadow:0 6px 14px -8px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.top h1{line-height:1.25}
+.top .dim{font-size:13px;margin-top:1px}
+.top-end{margin-inline-start:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+.desk{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:clamp(20px,3vw,40px);align-items:start}
+@media(max-width:1060px){.desk{grid-template-columns:1fr}.monitor{position:static;max-width:392px}}
+
+/* مقاطع يفصلها خطّ — لا بطاقات متساوية تتنافس على الانتباه */
+.bay{padding:26px 0;border-bottom:1px solid var(--rule-soft)}
+.bay:first-child{padding-top:0}
+.bay:last-child{border-bottom:0}
+.bay-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.bay-head h2{flex:0 0 auto}
+.bay-head .dim{font-size:13px}
+
+.field{margin-bottom:20px}
+.field:last-child{margin-bottom:0}
+.field-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.field-top .label,.field-top .label--ar{flex:1}
+
 input[type=text],input[type=email],textarea,select{
-  width:100%;background:var(--panel2);border:1px solid var(--edge);border-radius:11px;
-  padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);min-height:46px}
-textarea{min-height:96px;resize:vertical}
-input:focus,textarea:focus,select:focus{outline:2px solid var(--plum);outline-offset:1px}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-.row>*{flex:1;min-width:180px}
-.grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
-@media (max-width:860px){.grid{grid-template-columns:1fr}}
-button{font-family:inherit;font-size:14.5px;font-weight:700;border:0;border-radius:11px;padding:12px 18px;min-height:46px;cursor:pointer;color:#fff;background:var(--plum)}
-button.ghost{background:transparent;color:var(--plum);border:1px solid var(--edge)}
-button.gold{background:var(--gold)}
-button.danger{background:transparent;color:var(--rose);border:1px solid var(--edge)}
-button:disabled{opacity:.45;cursor:not-allowed}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:var(--panel2);border:1px solid var(--edge);border-radius:100px;padding:9px 15px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--muted);user-select:none}
-.chip.on{background:var(--plum);border-color:var(--plum);color:#fff}
-.chip.on.gold{background:var(--gold);border-color:var(--gold)}
-.chip.on.sage{background:var(--sage);border-color:var(--sage)}
-.chip.on.rose{background:var(--rose);border-color:var(--rose)}
-.switch{display:flex;align-items:center;gap:12px;padding:10px 0}
-.switch input{width:44px;height:26px;accent-color:var(--plum);cursor:pointer}
-.count{font-family:var(--mono);font-size:12px;color:var(--muted);direction:ltr}
-.count.over{color:var(--rose);font-weight:600}
-.note{color:var(--muted);font-size:13px}
-.hint{background:var(--goldSoft);border-inline-start:3px solid var(--gold);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px;color:var(--ink2)}
-.ok{background:var(--sageSoft);border-inline-start:3px solid var(--sage);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px}
-.err{background:var(--roseSoft);border-inline-start:3px solid var(--rose);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px}
-code{font-family:var(--mono);font-size:12.5px;direction:ltr;display:inline-block;background:var(--panel2);padding:1px 6px;border-radius:5px}
+  width:100%;background:var(--sunken);color:var(--ink);
+  border:1px solid var(--rule);border-radius:var(--r);
+  padding:13px 15px;font-family:inherit;font-size:15px;line-height:1.6;
+  transition:border-color .16s ease,background .16s ease;
+}
+input::placeholder,textarea::placeholder{color:#6E6790}
+input:hover,textarea:hover,select:hover{border-color:#3A3255}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--plum);background:#0B0914}
+textarea{min-height:104px;resize:vertical}
+select{appearance:none;cursor:pointer}
 
-/* ── معاينة الجوال ── */
-.phone{background:var(--deep);border-radius:34px;padding:8px;position:sticky;top:20px}
-.screen{background:#2A2340;border-radius:27px;padding:52px 12px 16px;min-height:420px;display:flex;flex-direction:column;gap:12px}
-.notif{background:rgba(255,255,255,.94);border-radius:17px;padding:12px;display:flex;gap:10px;color:#141024}
-.nicon{width:32px;height:32px;border-radius:9px;background:linear-gradient(140deg,#5B4BAE,#8D7FD6);flex:0 0 auto}
-.napp{font-size:10.5px;font-weight:700;color:#3C3552;display:flex;gap:8px}
-.napp span:last-child{margin-inline-start:auto;color:#7A7391;font-weight:500}
-.ntitle{font-size:14px;font-weight:800;margin-top:1px}
-.nsub{font-size:12px;color:#3C3552}
-.nbody{font-size:12.5px;color:#3C3552;line-height:1.55}
-.nimg{width:100%;height:96px;object-fit:cover;border-radius:10px;margin-top:8px;display:none}
-.inapp{background:#F6F5FA;border-radius:16px;padding:12px;color:#241F3B}
-.strip{display:flex;align-items:center;gap:8px;border-radius:100px;border:1px solid;padding:8px 12px;font-size:13px;font-weight:600;overflow:hidden;white-space:nowrap}
-.stripdot{width:22px;height:22px;border-radius:11px;flex:0 0 auto}
-.board{border-radius:14px;border:1px solid;overflow:hidden;background:#fff}
-.board img{width:100%;height:120px;object-fit:cover;display:block}
-.bpad{padding:12px}
-.bkind{font-size:11px;font-weight:800;margin-bottom:3px}
-.btitle{font-size:15px;font-weight:800}
-.bbody{font-size:13px;color:#4A4364;margin-top:3px}
+#title{font-family:var(--display);font-size:19px;font-weight:600;padding:15px}
 
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th,td{text-align:right;padding:10px 12px;border-bottom:1px solid var(--edge)}
-th{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.04em}
-tbody tr:last-child td{border-bottom:0}
-.pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;display:inline-block}
+.gauge{font-family:var(--meter);font-size:11px;font-variant-numeric:tabular-nums;color:var(--dim);direction:ltr}
+.gauge.warn{color:var(--armed)}
+.gauge.over{color:var(--live)}
+
+.keys{display:flex;gap:8px;flex-wrap:wrap}
+.key{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--raised);border:1px solid var(--rule);color:var(--dim);
+  border-radius:10px;padding:9px 14px;min-height:42px;cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:500;
+  transition:border-color .16s ease,color .16s ease,background .16s ease;
+}
+.key:hover{border-color:#3F3760;color:var(--ink-2)}
+.key[aria-pressed="true"]{background:var(--plum-dim);border-color:var(--plum);color:var(--ink)}
+.key[aria-pressed="true"][data-tone=armed]{background:var(--armed-dim);border-color:var(--armed);color:#FFDCA8}
+.key[aria-pressed="true"][data-tone=ok]{background:var(--ok-dim);border-color:var(--ok);color:#CBF1D2}
+.key[aria-pressed="true"][data-tone=live]{background:var(--live-dim);border-color:var(--live);color:#FFCCD7}
+.key .i{width:15px;height:15px}
+
+.toggle{display:flex;align-items:center;gap:14px;padding:14px 0;cursor:pointer}
+.toggle + .toggle{border-top:1px solid var(--rule-soft)}
+.toggle-body{flex:1;min-width:0}
+.toggle-body b{display:block;font-weight:600;font-size:15px}
+.sw{
+  position:relative;width:46px;height:27px;border-radius:99px;flex:0 0 auto;
+  background:var(--sunken);border:1px solid var(--rule);transition:background .18s ease,border-color .18s ease;
+}
+.sw::after{
+  content:"";position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;
+  background:#5F5880;transition:transform .18s cubic-bezier(.2,0,0,1),background .18s ease;
+}
+input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+input[type=checkbox]:checked + .sw{background:var(--plum-dim);border-color:var(--plum)}
+input[type=checkbox]:checked + .sw::after{transform:translateX(-19px);background:var(--plum)}
+input[type=checkbox]:focus-visible + .sw{outline:2px solid var(--plum);outline-offset:2px}
+
+.monitor{position:sticky;top:22px}
+.monitor-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.monitor-head .label{flex:1}
+
+.bezel{
+  border:11px solid #262040;border-radius:34px;overflow:hidden;
+  box-shadow:var(--lift), 0 0 0 1px rgba(255,255,255,.05);
+}
+.glass{
+  background:linear-gradient(180deg,#2E2748 0%,#1B1730 42%,#161327 100%);
+  padding:46px 13px 15px;min-height:452px;border:0;
+  display:flex;flex-direction:column;gap:13px;position:relative;overflow:hidden;
+}
+.glass::before{
+  content:"";position:absolute;top:13px;left:50%;transform:translateX(-50%);
+  width:74px;height:17px;border-radius:99px;background:#0B0914;
+}
+
+.notif{
+  background:rgba(248,246,255,.94);color:#141024;border-radius:17px;padding:12px;
+  display:flex;gap:10px;
+  box-shadow:0 8px 22px -14px rgba(0,0,0,.7);
+}
+.notif-ico{
+  width:33px;height:33px;border-radius:9px;flex:0 0 auto;
+  background:linear-gradient(150deg,#5B4BAE,#8D7FD6);display:grid;place-items:center;color:#fff;
+}
+.notif-meta{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:#3B3454}
+.notif-meta .t{margin-inline-start:auto;font-family:var(--meter);color:#5F5880;font-weight:400}
+.notif h3{font-family:var(--display);font-size:15px;font-weight:600;color:#100D1E;margin-top:2px;letter-spacing:-.01em}
+.notif .sub{font-size:13px;color:#3B3454}
+.notif .txt{font-size:13px;color:#332E4C;line-height:1.55;margin-top:1px}
+.notif #pvImgSlot img{width:100%;height:92px;object-fit:cover;border-radius:10px;margin-top:8px}
+
+.inapp{background:#F4F2FA;margin:0 -13px;padding:13px;color:#241F3B}
+.strip{
+  display:flex;align-items:center;gap:9px;border:1px solid;border-radius:99px;
+  padding:8px 12px;font-size:13px;font-weight:600;overflow:hidden;
+}
+.strip .txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.dot{width:23px;height:23px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;color:#fff}
+.dot .i{width:13px;height:13px}
+.board{border:1px solid;border-radius:15px;overflow:hidden;background:#fff}
+.board img{width:100%;height:112px;object-fit:cover;display:block}
+.board-pad{padding:12px}
+.board-kind{font-size:11px;font-weight:700;margin-bottom:3px}
+.board h3{font-family:var(--display);font-size:15px;font-weight:600;color:#171232}
+.board p{font-size:13px;color:#443E5E;margin-top:3px}
+.glass-note{margin-top:auto;text-align:center;font-size:11px;color:rgba(240,237,250,.5)}
+
+.transmit{
+  position:fixed;inset-inline:0;bottom:0;z-index:40;
+  background:rgba(19,16,32,.92);backdrop-filter:blur(18px) saturate(1.3);
+  border-top:1px solid var(--rule);
+}
+.transmit-in{
+  max-width:1340px;margin:0 auto;padding:14px clamp(16px,3vw,32px);
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.lamp{display:flex;align-items:center;gap:11px;flex:0 0 auto}
+.bulb{
+  width:11px;height:11px;border-radius:50%;background:#4C4468;position:relative;flex:0 0 auto;
+  transition:background .2s ease,box-shadow .2s ease;
+}
+.bulb.armed{background:var(--armed);box-shadow:0 0 0 4px rgba(242,178,92,.16)}
+.bulb.live{background:var(--live);box-shadow:0 0 0 4px rgba(255,110,138,.22)}
+/* الحركة الوحيدة المقصودة: نبضة تنطلق مرّتين لحظة الخروج على الهواء */
+.bulb.live::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:1.5px solid var(--live);animation:ring 1.15s cubic-bezier(.16,1,.3,1) 2;
+}
+@keyframes ring{ from{transform:scale(.7);opacity:.9} to{transform:scale(3.1);opacity:0} }
+@media(prefers-reduced-motion:reduce){
+  .bulb.live::after{animation:none;opacity:0}
+  *{transition-duration:.01ms!important}
+}
+.lamp-txt b{display:block;font-family:var(--meter);font-size:11px;letter-spacing:.14em;color:var(--ink-2);direction:ltr;text-align:right}
+.lamp-txt span{font-size:11px;color:var(--dim)}
+.transmit-msg{flex:1;min-width:180px;font-size:13px;color:var(--ink-2)}
+.transmit-msg.err{color:#FFB8C5}
+.transmit-msg.ok{color:#BFEBC9}
+
+button{font-family:inherit;cursor:pointer;border:0}
+.go{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(160deg,#6A56C8,#4F4098);color:#fff;
+  font-family:var(--display);font-size:15px;font-weight:600;
+  border-radius:13px;padding:0 26px;min-height:50px;
+  box-shadow:0 12px 26px -14px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.2);
+  transition:transform .14s cubic-bezier(.2,0,0,1),box-shadow .18s ease,filter .18s ease;
+}
+.go:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 18px 34px -16px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.26)}
+.go:active:not(:disabled){transform:translateY(0)}
+.go:disabled{filter:grayscale(.75);opacity:.45;cursor:not-allowed;box-shadow:none}
+.go .i{width:17px;height:17px}
+
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--raised);border:1px solid var(--rule);color:var(--ink-2);
+  border-radius:10px;padding:0 15px;min-height:40px;font-size:13px;font-weight:500;
+  transition:border-color .16s ease,color .16s ease;
+}
+.btn:hover{border-color:#3F3760;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn .i{width:15px;height:15px}
+.btn--quiet{background:transparent}
+.btn--live{color:#FFB8C5}
+.btn--live:hover{border-color:var(--live);color:#FFCCD7}
+
+.log{margin-top:44px;border-top:1px solid var(--rule);padding-top:26px}
+.log-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.log-head h2{flex:1}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{
+  font-family:var(--meter);font-size:11px;letter-spacing:.13em;color:var(--dim);
+  font-weight:500;text-align:right;padding:0 14px 10px;white-space:nowrap;direction:ltr;
+}
+th:first-child{direction:rtl;font-family:var(--body);font-size:11px;letter-spacing:.02em}
+td{padding:13px 14px;border-top:1px solid var(--rule-soft);vertical-align:middle}
+tbody tr{transition:background .16s ease}
+tbody tr:hover{background:var(--panel)}
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;border:1px solid;
+}
+.row-new{animation:settle .8s cubic-bezier(.16,1,.3,1)}
+@keyframes settle{ from{background:var(--plum-dim)} to{background:transparent} }
+
+.gate{max-width:460px;margin:clamp(40px,9vh,90px) auto;text-align:center}
+.gate h2{font-size:21px;margin-bottom:6px}
+.gate .stack{display:grid;gap:10px;text-align:right;margin-top:26px}
+.empty{text-align:center;padding:44px 20px;color:var(--dim)}
+.empty .i{width:30px;height:30px;opacity:.5;margin-bottom:8px}
+
+.slab{
+  background:var(--panel);border:1px solid var(--rule);border-radius:var(--r-lg);
+  padding:20px;
+}
+.warn-note{display:flex;gap:11px;margin:18px 0;align-items:flex-start}
+.warn-note .i{color:var(--armed);flex:0 0 auto;margin-top:3px}
+.warn-note .dim{color:var(--ink-2)}
+
+code{
+  font-family:var(--meter);font-size:13px;direction:ltr;display:inline-block;
+  background:var(--sunken);border:1px solid var(--rule);
+  padding:2px 7px;border-radius:6px;color:#CFC8E8;
+}
+pre{
+  font-family:var(--meter);font-size:11px;direction:ltr;text-align:left;
+  background:var(--sunken);border:1px solid var(--rule);border-radius:var(--r);
+  padding:13px;margin:10px 0 0;white-space:pre-wrap;line-height:1.65;
+  color:#CFC8E8;overflow-x:auto;
+}
+a{color:var(--plum);text-underline-offset:3px;text-decoration-thickness:1px}
 .hide{display:none!important}
-.center{max-width:440px;margin:60px auto;text-align:center}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.i--fill{fill:currentColor;stroke:none}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header>
-  <div class="logo">💜</div>
-  <div>
-    <h1>منصّة الإعلانات</h1>
-    <div class="sub">تنشر من هنا — فيصل كلّ من يستعمل «أنا و هي»</div>
-  </div>
-  <div style="margin-inline-start:auto;display:flex;align-items:center;gap:10px">
-    <button class="ghost" id="openCfg" style="padding:7px 14px;min-height:0;font-size:12.5px">الإعدادات</button>
-    <div id="whoBox" class="hide" style="text-align:center">
-      <div class="note" id="who"></div>
-      <button class="ghost" id="signOut" style="margin-top:6px;padding:7px 14px;min-height:0">خروج</button>
+<!-- أيقونات مرسومة بوزن خطّ واحد — لا رموز تعبيرية تنوب عن نظام أيقونات -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-tower" viewBox="0 0 24 24"><path d="M12 9v12M8.5 21h7M5.6 5.6a9 9 0 0 0 0 12.7M18.4 5.6a9 9 0 0 1 0 12.7M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/><circle cx="12" cy="12" r="1.6" class="i--fill"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m21 15-4.5-4.5L6 20"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a4.5 4.5 0 0 0 6.6.4l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4l-1.5 1.5"/><path d="M14 11a4.5 4.5 0 0 0-6.6-.4l-2.6 2.6a4.5 4.5 0 0 0 6.4 6.4l1.5-1.5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.8 4.6 4.4L19 6.6"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.8v5"/><circle cx="12" cy="16" r=".9" class="i--fill"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11.4v4.8"/><circle cx="12" cy="8.2" r=".9" class="i--fill"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5 13.9 9l5.6 1.9-5.6 2L12 18.5l-1.9-5.6-5.6-2L10.1 9 12 3.5Z"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.4-4.7-7.4-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7.4 2.6C19.4 15.3 12 20 12 20Z"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20.5 4v4.4h-4.4"/></symbol>
+<symbol id="i-power" viewBox="0 0 24 24"><path d="M12 4v8"/><path d="M17.7 7a8 8 0 1 1-11.4 0"/></symbol>
+<symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H14"/><path d="M17 8.5 20.5 12 17 15.5M20.5 12H10"/></symbol>
+<symbol id="i-google" viewBox="0 0 24 24"><path d="M20.6 12.2c0-.6-.05-1.2-.15-1.8H12v3.4h4.85a4.15 4.15 0 0 1-1.8 2.7v2.25h2.9c1.7-1.55 2.65-3.85 2.65-6.55Z" class="i--fill"/><path d="M12 21c2.4 0 4.45-.8 5.93-2.15l-2.9-2.25c-.8.55-1.83.87-3.03.87-2.33 0-4.3-1.57-5-3.68H4v2.32A9 9 0 0 0 12 21Z" class="i--fill"/><path d="M7 13.79a5.4 5.4 0 0 1 0-3.45V8.02H4a9 9 0 0 0 0 8.09l3-2.32Z" class="i--fill"/><path d="M12 6.87c1.32 0 2.5.46 3.43 1.35l2.57-2.57C16.45 4.2 14.4 3.3 12 3.3A9 9 0 0 0 4 8.02l3 2.32c.7-2.11 2.67-3.47 5-3.47Z" class="i--fill"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.8 6.8 7.3 5.3a1.5 1.5 0 0 0 1.8 0l7.3-5.3"/></symbol>
+<symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4 20 20"/><path d="M9.9 5.4A9.6 9.6 0 0 1 12 5.2c5 0 8.5 4 9.4 5.6.2.4.2.9 0 1.3-.4.7-1.3 2-2.7 3.2M6.6 7.3C4.7 8.6 3.5 10.3 3 11.1a1.3 1.3 0 0 0 0 1.3c.9 1.6 4.4 5.6 9.4 5.6 1 0 1.9-.15 2.7-.4"/><path d="M10.4 10a2.6 2.6 0 0 0 3.5 3.5"/></symbol>
+</defs></svg>
+
+<div class="shell">
+
+  <header class="top">
+    <div class="mark"><svg class="i" style="width:22px;height:22px"><use href="#i-tower"/></svg></div>
+    <div>
+      <h1>غرفة البثّ</h1>
+      <p class="dim">ما يُنشَر من هنا يصل كلّ من يستعمل «أنا و هي»</p>
     </div>
-  </div>
-</header>
-
-<!-- ════════ الإعداد ════════ -->
-<section id="setup" class="card hide">
-  <h2>الإعداد — مرّة واحدة</h2>
-  <p class="sub">أدخل عنوان مشروعك في Supabase ومفتاحه المنشور (anon). يُحفظان في هذا المتصفّح وحده.</p>
-  <div class="hint" style="margin:14px 0">
-    <b>لا تضع المفتاح السرّي هنا أبدًا.</b> المفتاح المنشور كافٍ: الصلاحية تحرسها
-    سياسات <code>RLS</code> في قاعدة البيانات، لا هذه الصفحة.
-  </div>
-  <div style="display:grid;gap:12px">
-    <div><label>Project URL</label><input type="text" id="cfgUrl" placeholder="https://xxxx.supabase.co" dir="ltr"></div>
-    <div><label>Anon / Publishable key</label><input type="text" id="cfgKey" placeholder="sb_publishable_…" dir="ltr"></div>
-    <button id="cfgSave">حفظ ومتابعة</button>
-  </div>
-</section>
-
-<!-- ════════ الدخول ════════ -->
-<section id="auth" class="card hide">
-  <div class="center">
-    <h2>دخول صاحب التطبيق</h2>
-    <p class="sub" style="margin-bottom:20px">ادخل بالحساب نفسه الذي تستعمله في التطبيق.</p>
-    <div style="display:grid;gap:10px;text-align:right">
-      <button id="btnGoogle">المتابعة عبر Google</button>
-      <div class="note" style="text-align:center;margin:4px 0">أو برابط يصلك على بريدك</div>
-      <input type="email" id="email" placeholder="بريدك الإلكتروني" dir="ltr">
-      <button class="ghost" id="btnMagic">أرسل لي رابط الدخول</button>
+    <div class="top-end">
+      <button class="btn btn--quiet" id="openCfg"><svg class="i"><use href="#i-link"/></svg>الاتصال</button>
+      <div id="whoBox" class="hide" style="display:flex;align-items:center;gap:10px">
+        <span class="dim" id="who" style="font-size:13px"></span>
+        <button class="btn btn--quiet" id="signOut"><svg class="i"><use href="#i-out"/></svg>خروج</button>
+      </div>
     </div>
-    <div id="authMsg" style="margin-top:16px"></div>
-  </div>
-</section>
+  </header>
 
-<!-- ════════ ليس مشرفًا ════════ -->
-<section id="denied" class="card hide">
-  <div class="center">
-    <h2>حسابك ليس في جدول المشرفين</h2>
-    <p class="sub">النشر محروس بقاعدة البيانات لا بهذه الصفحة — فلا يكفي فتحها.</p>
-    <div class="hint" style="text-align:right;margin-top:18px">
-      شغّل <code>supabase/announcements.sql</code> ثمّ أضف معرّفك:
-      <div style="margin-top:8px"><code id="myUid" style="user-select:all"></code></div>
-      <div style="margin-top:10px;font-family:var(--mono);font-size:12px;direction:ltr;text-align:left;white-space:pre-wrap;line-height:1.6;background:var(--panel2);border:1px solid var(--edge);border-radius:8px;padding:10px" id="sqlSnippet"></div>
-      <button class="ghost" id="copySql" style="margin-top:10px;padding:8px 16px;min-height:0">نسخ الأمر</button>
-      <div id="copyMsg" class="note" style="margin-top:6px"></div>
+  <section id="setup" class="slab hide" style="margin-bottom:26px">
+    <h2 style="margin-bottom:6px">وجهة الاتصال</h2>
+    <p class="dim dim--prose">مثبَّتة على مشروعك. غيّرها فقط لتوجيه المنصّة إلى مشروع آخر.</p>
+    <div class="warn-note">
+      <svg class="i"><use href="#i-alert"/></svg>
+      <p class="dim dim--prose">
+        لا تضع المفتاح السرّي هنا. المفتاح المنشور كافٍ — الصلاحية تحرسها سياسات
+        <code>RLS</code> في قاعدة البيانات، لا هذه الصفحة.
+      </p>
     </div>
-  </div>
-</section>
+    <div style="display:grid;gap:14px">
+      <div><div class="field-top"><span class="label">Project URL</span></div>
+        <input type="text" id="cfgUrl" dir="ltr" placeholder="https://xxxx.supabase.co"></div>
+      <div><div class="field-top"><span class="label">Anon key</span></div>
+        <input type="text" id="cfgKey" dir="ltr" placeholder="sb_publishable_…"></div>
+      <div><button class="go" id="cfgSave"><svg class="i"><use href="#i-check"/></svg>حفظ</button></div>
+    </div>
+  </section>
 
-<!-- ════════ اللوحة ════════ -->
-<main id="app" class="hide">
-<div class="grid">
+  <section id="auth" class="hide">
+    <div class="gate">
+      <h2>دخول صاحب التطبيق</h2>
+      <p class="dim">بالحساب نفسه الذي تستعمله في التطبيق.</p>
+      <div class="stack">
+        <button class="go" id="btnGoogle" style="justify-content:center"><svg class="i"><use href="#i-google"/></svg>المتابعة عبر Google</button>
+        <p class="dim" style="text-align:center;margin:6px 0">أو برابط يصلك على بريدك</p>
+        <input type="email" id="email" dir="ltr" placeholder="بريدك الإلكتروني">
+        <button class="btn" id="btnMagic" style="justify-content:center;min-height:46px"><svg class="i"><use href="#i-mail"/></svg>أرسل رابط الدخول</button>
+      </div>
+      <div id="authMsg" class="dim" style="margin-top:18px"></div>
+    </div>
+  </section>
 
-  <div>
-    <div class="card">
-      <h2>إعلان جديد</h2>
+  <section id="denied" class="hide">
+    <div class="gate">
+      <h2>حسابك ليس في جدول المشرفين</h2>
+      <p class="dim">النشر محروس بقاعدة البيانات لا بهذه الصفحة — فلا يكفي فتحها.</p>
+      <div class="slab" style="text-align:right;margin-top:24px">
+        <p class="dim">شغّل <code>announcements.sql</code> ثمّ أضف معرّفك:</p>
+        <pre id="sqlSnippet"></pre>
+        <button class="btn" id="copySql" style="margin-top:12px"><svg class="i"><use href="#i-check"/></svg>نسخ الأمر</button>
+        <p class="dim" id="copyMsg" style="margin-top:8px"></p>
+      </div>
+    </div>
+  </section>
 
-      <div style="display:grid;gap:16px;margin-top:16px">
-        <div>
-          <label>العنوان <span class="count" id="cTitle">0/60</span></label>
-          <input type="text" id="title" placeholder="مثال: تحديث جديد 🎉" maxlength="120">
-        </div>
+  <main id="app" class="hide">
+    <div class="desk">
 
-        <div>
-          <label>نصّ الإشعار <span class="count" id="cBody">0/178</span></label>
-          <textarea id="body" placeholder="اكتب ما تريد قوله…" maxlength="400"></textarea>
-        </div>
+      <div>
+        <section class="bay">
+          <div class="bay-head"><h2>نصّ البثّ</h2><span class="dim">ما يُقرأ على شاشة القفل</span></div>
 
-        <div>
-          <label>سطر فرعي (اختياري)</label>
-          <input type="text" id="subtitle" placeholder="يظهر بين العنوان والنصّ" maxlength="120">
-        </div>
-
-        <div>
-          <label>النوع</label>
-          <div class="chips" id="kinds"></div>
-        </div>
-
-        <div>
-          <label>صورة (اختياري)</label>
-          <input type="file" id="file" accept="image/*" style="font-size:13.5px">
-          <div class="note" style="margin-top:6px">
-            تظهر داخل اللوحة على الرئيسية. ولإظهارها داخل الإشعار نفسه انظر الملاحظة أسفل.
+          <div class="field">
+            <div class="field-top"><span class="label">Headline</span><span class="gauge" id="gTitle">0/60</span></div>
+            <input type="text" id="title" maxlength="140" placeholder="عنوان قصير يُقرأ بنظرة">
           </div>
-          <div id="imgState" style="margin-top:8px"></div>
-        </div>
 
-        <div>
-          <label>الضغط عليه يفتح</label>
-          <select id="route">
-            <option value="">لا شيء — يفتح التطبيق</option>
-            <option value="/home">الرئيسية</option>
-            <option value="/week">التقويم</option>
-            <option value="/meeting">الاجتماع</option>
-            <option value="/goals">الأهداف</option>
-            <option value="/budget">الميزانية</option>
-            <option value="/activities">الفعاليات</option>
-            <option value="/needs">الاحتياجات</option>
-            <option value="/health">عافيتنا</option>
-          </select>
-        </div>
+          <div class="field">
+            <div class="field-top"><span class="label">Body</span><span class="gauge" id="gBody">0/178</span></div>
+            <textarea id="body" maxlength="400" placeholder="ما تريد قوله…"></textarea>
+          </div>
+
+          <div class="field">
+            <div class="field-top"><span class="label">Subtitle</span><span class="dim" style="font-size:11px">اختياري</span></div>
+            <input type="text" id="subtitle" maxlength="140" placeholder="سطر بين العنوان والنصّ">
+          </div>
+        </section>
+
+        <section class="bay">
+          <div class="bay-head"><h2>النوع</h2><span class="dim">يلوّن الشريط ويختار أيقونته</span></div>
+          <div class="keys" id="kinds"></div>
+        </section>
+
+        <section class="bay">
+          <div class="bay-head"><h2>القناة</h2><span class="dim">أين يظهر ومتى ينتهي</span></div>
+
+          <label class="toggle">
+            <input type="checkbox" id="inApp" checked><span class="sw"></span>
+            <span class="toggle-body"><b>داخل التطبيق</b><span class="dim">يبقى على الرئيسية مدّة تختارها — ولا يُزعج</span></span>
+          </label>
+
+          <div id="inAppOpts" style="padding:6px 0 14px">
+            <div class="field" style="margin-bottom:16px">
+              <div class="field-top"><span class="label--ar">شكله</span></div>
+              <div class="keys" id="styles"></div>
+            </div>
+            <div class="field">
+              <div class="field-top"><span class="label--ar">يبقى</span></div>
+              <div class="keys" id="durs"></div>
+            </div>
+          </div>
+
+          <label class="toggle">
+            <input type="checkbox" id="push" checked><span class="sw"></span>
+            <span class="toggle-body"><b>إشعار على الجوال</b><span class="dim">ينبّه فورًا على شاشة القفل — ثم يزول</span></span>
+          </label>
+          <p class="dim dim--prose" id="pushInfo" style="padding-top:4px"></p>
+        </section>
+
+        <section class="bay">
+          <div class="bay-head"><h2>الصورة والوجهة</h2><span class="dim">اختياريتان</span></div>
+
+          <div class="field">
+            <div class="field-top"><span class="label--ar">صورة اللوحة</span></div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <button class="btn" id="pickFile"><svg class="i"><use href="#i-image"/></svg>اختيار صورة</button>
+              <input type="file" id="file" accept="image/*" class="hide">
+              <button class="btn btn--live hide" id="dropImg"><svg class="i"><use href="#i-x"/></svg>إزالة</button>
+              <span class="dim" id="imgState" style="font-size:13px"></span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-top"><span class="label--ar">الضغط عليه يفتح</span></div>
+            <select id="route">
+              <option value="">لا شيء — يفتح التطبيق</option>
+              <option value="/home">الرئيسية</option>
+              <option value="/week">التقويم</option>
+              <option value="/meeting">الاجتماع</option>
+              <option value="/goals">الأهداف</option>
+              <option value="/budget">الميزانية</option>
+              <option value="/activities">الفعاليات</option>
+              <option value="/needs">الاحتياجات</option>
+              <option value="/health">عافيتنا</option>
+            </select>
+          </div>
+        </section>
       </div>
-    </div>
 
-    <div class="card">
-      <h2>القنوات والمدّة</h2>
-
-      <div class="switch">
-        <input type="checkbox" id="inApp" checked>
-        <div>
-          <div style="font-weight:700">يظهر داخل التطبيق</div>
-          <div class="note">يبقى على الرئيسية مدّة تختارها — ولا يُزعج</div>
+      <aside class="monitor">
+        <div class="monitor-head">
+          <span class="label">Monitor</span>
+          <span class="dim" style="font-size:11px">ما سيصلهم حرفًا بحرف</span>
         </div>
-      </div>
-
-      <div id="inAppOpts">
-        <div style="margin:10px 0">
-          <label>شكله</label>
-          <div class="chips" id="styles"></div>
-        </div>
-        <div>
-          <label>يبقى</label>
-          <div class="chips" id="durs"></div>
-        </div>
-      </div>
-
-      <div class="switch" style="margin-top:14px;border-top:1px solid var(--edge);padding-top:16px">
-        <input type="checkbox" id="push" checked>
-        <div>
-          <div style="font-weight:700">إشعار على الجوال</div>
-          <div class="note" id="pushNote">ينبّه فورًا على شاشة القفل — ثم يزول</div>
-        </div>
-      </div>
-
-      <div id="pushInfo" class="note" style="margin-top:8px"></div>
-    </div>
-
-    <div id="msg"></div>
-    <button class="gold" id="publish" style="width:100%">نشر للجميع</button>
-    <p class="note" style="text-align:center;margin-top:10px">
-      يُقرأ على كل جهاز. راجع النصّ قبل النشر.
-    </p>
-  </div>
-
-  <!-- ── المعاينة ── -->
-  <div>
-    <div class="note" style="margin-bottom:8px">على شاشة القفل</div>
-    <div class="phone">
-      <div class="screen">
-        <div class="notif">
-          <div class="nicon"></div>
-          <div style="flex:1;min-width:0">
-            <div class="napp"><span>أنا &amp; هي</span><span>الآن</span></div>
-            <div class="ntitle" id="pvTitle">عنوان الإعلان</div>
-            <div class="nsub" id="pvSub"></div>
-            <div class="nbody" id="pvBody"></div>
-            <img class="nimg" id="pvImg" alt="">
+        <div class="bezel">
+          <div class="glass">
+            <div class="notif" id="pvNotif">
+              <div class="notif-ico"><svg class="i" style="width:17px;height:17px"><use href="#i-heart"/></svg></div>
+              <div style="flex:1;min-width:0">
+                <div class="notif-meta"><span>أنا &amp; هي</span><span class="t">الآن</span></div>
+                <h3 id="pvTitle">عنوان الإعلان</h3>
+                <p class="sub" id="pvSub"></p>
+                <p class="txt" id="pvBody"></p>
+                <div id="pvImgSlot"></div>
+              </div>
+            </div>
+            <div class="inapp" id="pvInApp"></div>
+            <p class="glass-note" id="pvNote"></p>
           </div>
         </div>
-
-        <div class="note" style="color:rgba(255,255,255,.6);font-size:11px;margin-top:4px">وداخل التطبيق</div>
-        <div class="inapp" id="pvInApp"></div>
-      </div>
+      </aside>
     </div>
-  </div>
+
+    <section class="log">
+      <div class="log-head">
+        <h2>سجلّ البثّ</h2>
+        <button class="btn btn--quiet" id="reload"><svg class="i"><use href="#i-refresh"/></svg>تحديث</button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>العنوان</th><th>Kind</th><th>Form</th><th>Until</th><th>State</th><th></th></tr></thead>
+          <tbody id="list"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
 </div>
 
-<!-- ── المنشور ── -->
-<div class="card" style="margin-top:24px">
-  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-    <h2 style="flex:1">ما نُشر</h2>
-    <button class="ghost" id="reload" style="padding:8px 14px;min-height:0">تحديث</button>
+<div class="transmit hide" id="transmit">
+  <div class="transmit-in">
+    <div class="lamp">
+      <span class="bulb" id="bulb"></span>
+      <span class="lamp-txt"><b id="lampState">STANDBY</b><span id="lampSub">لا شيء جاهز</span></span>
+    </div>
+    <p class="transmit-msg" id="msg"></p>
+    <button class="go" id="publish" disabled><svg class="i"><use href="#i-power"/></svg><span id="goTxt">نشر</span></button>
   </div>
-  <div style="overflow-x:auto;margin-top:12px">
-    <table>
-      <thead><tr><th>العنوان</th><th>النوع</th><th>الشكل</th><th>يظهر حتى</th><th>الحالة</th><th></th></tr></thead>
-      <tbody id="list"><tr><td colspan="6" class="note">…</td></tr></tbody>
-    </table>
-  </div>
-</div>
-
-<div class="card">
-  <h2>ملاحظتان</h2>
-  <p class="note" style="margin-top:8px">
-    <b>الصورة داخل الإشعار:</b> تُعرض داخل التطبيق دائمًا. أمّا ظهورها في الإشعار
-    نفسه على iOS فيحتاج <span style="color:var(--ink2)">Notification Service Extension</span>
-    في نسخة أصلية جديدة — وهي غير مضافة بعد، فلا تعتمد عليها الآن.
-  </p>
-  <p class="note" style="margin-top:10px">
-    <b>«لمين يوصل»:</b> التطبيق ليس فيه فئات مستخدمين (لا مشترون ولا مزوّدون) —
-    كلّ مستخدميه أزواج متساوون. فالإعلان يصل الجميع، ومن أراد رسالة لشريكه وحده
-    فتلك «لمسة اليوم» داخل التطبيق لا إعلان من هنا.
-  </p>
-</div>
-</main>
-
 </div>
 
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 /* ═══════════════════════════════════════════════════════════
-   منصّة الإعلانات — صفحة واحدة، بلا خادم، وبلا مفتاح سرّي.
-   الصلاحية تحرسها سياسات RLS في قاعدة البيانات: إخفاء زرّ هنا ليس حماية،
-   ورفضُ الإدراج هناك هو الحماية. انظر supabase/announcements.sql
+   الحراسة كلّها سياسات RLS في قاعدة البيانات. إخفاء عنصر هنا
+   ترتيبٌ للواجهة لا حماية — والحماية أن الإدراج يُرفض هناك.
    ═══════════════════════════════════════════════════════════ */
 
 const $ = (id) => document.getElementById(id);
 const show = (id, on = true) => $(id).classList.toggle('hide', !on);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-const KINDS = [
-  { id:'info', label:'خبر',   cls:'',      tint:'var(--plum)', soft:'var(--plumSoft)' },
-  { id:'good', label:'تهنئة', cls:'sage',  tint:'var(--sage)', soft:'var(--sageSoft)' },
-  { id:'warn', label:'انتبه', cls:'gold',  tint:'var(--gold)', soft:'var(--goldSoft)' },
-  { id:'love', label:'تحفيز', cls:'rose',  tint:'var(--rose)', soft:'var(--roseSoft)' },
-];
-const STYLES = [{ id:'strip', label:'شريط' }, { id:'board', label:'لوحة' }];
-const DURS = [{ d:0, label:'اليوم' }, { d:2, label:'٣ أيام' }, { d:6, label:'أسبوع' }, { d:29, label:'شهر' }, { d:-1, label:'بلا نهاية' }];
-const LIMITS = { title:60, body:178 };
-
-/*
- * القيمتان الافتراضيّتان — عنوان المشروع والمفتاح **المنشور**.
- *
- * وضعهما هنا لا يكشف شيئًا: هما نفسهما داخل التطبيق على جوّال كل مستخدم، ويمكن
- * استخراجهما منه بدقائق. والمفتاح المنشور لا يمنح صلاحية بذاته — سياسات RLS هي
- * التي تقرّر من يقرأ ومن يكتب. المفتاح السرّي وحده هو الذي يتجاوزها، ولا وجود له
- * في هذا المشروع كلّه.
- *
- * وبقاء شاشة الإعداد متاحة (زرّ «الإعدادات» بالأعلى) يفيد لتوجيه المنصّة لمشروع
- * آخر بلا تعديل الملف.
- */
+/* عنوان المشروع والمفتاح **المنشور** — نفسهما داخل التطبيق على كل جوّال،
+   ولا يمنحان صلاحية بذاتهما. المفتاح السرّي لا وجود له في هذا المشروع. */
 const DEFAULTS = {
   url: 'https://ifbbwozivnwfbqxugrvl.supabase.co',
   key: 'sb_publishable_N-JpdUPCPl9tSWpXYtHAzQ_kaCwmnGi',
 };
 
-let sb = null, user = null, isAdmin = false;
-let kind = 'info', style = 'strip', durDays = 6, imageUrl = '';
+const KINDS = [
+  { id:'info', label:'خبر',   icon:'i-info',  tone:'',      c:'#5B4BAE', soft:'#EFEBFB' },
+  { id:'good', label:'تهنئة', icon:'i-spark', tone:'ok',    c:'#4F8C3B', soft:'#E6F2DF' },
+  { id:'warn', label:'انتبه', icon:'i-alert', tone:'armed', c:'#B8721A', soft:'#FBEFDA' },
+  { id:'love', label:'تحفيز', icon:'i-heart', tone:'live',  c:'#C9425F', soft:'#FCE4EA' },
+];
+const STYLES = [{ id:'strip', label:'شريط' }, { id:'board', label:'لوحة' }];
+const DURS = [{ d:0, label:'اليوم' }, { d:2, label:'٣ أيام' }, { d:6, label:'أسبوع' }, { d:29, label:'شهر' }, { d:-1, label:'بلا نهاية' }];
+const LIMITS = { title:60, body:178 };
 
-/* ─────────── الإعداد ─────────── */
-/*
- * `localStorage` يرمي — لا يُرجع فارغًا — في التصفّح الخاصّ وفي سياقات `data:`
- * وحين يمنع المتصفّح تخزين المواقع. وصفحةٌ تموت لأن حفظ إعدادٍ فشل أسوأ من صفحة
- * بلا حفظ: فنلتقط الخطأ ونُبقيها عاملة بذاكرة الجلسة.
- */
-let memUrl = '', memKey = '';
-const safeGet = (k) => { try { return localStorage.getItem(k) || ''; } catch { return ''; } };
-const safeSet = (k,v) => { try { localStorage.setItem(k,v); } catch { /* الجلسة تكفي */ } };
+let sb=null, user=null, deviceCount=0;
+let kind='info', style='strip', durDays=6, imageUrl='';
+
+let memUrl='', memKey='';
+const get = (k) => { try { return localStorage.getItem(k) || ''; } catch { return ''; } };
+const put = (k,v) => { try { localStorage.setItem(k,v); } catch { /* الجلسة تكفي */ } };
 const cfg = {
-  get url(){ return safeGet('sb_url') || memUrl || DEFAULTS.url; },
-  get key(){ return safeGet('sb_key') || memKey || DEFAULTS.key; },
-  save(u,k){
-    memUrl = u.trim().replace(/\/$/,''); memKey = k.trim();
-    safeSet('sb_url', memUrl); safeSet('sb_key', memKey);
-  },
+  get url(){ return get('sb_url') || memUrl || DEFAULTS.url; },
+  get key(){ return get('sb_key') || memKey || DEFAULTS.key; },
+  save(u,k){ memUrl=u.trim().replace(/\/$/,''); memKey=k.trim(); put('sb_url',memUrl); put('sb_key',memKey); },
 };
 
-function connect(){
-  sb = createClient(cfg.url, cfg.key, { auth: { persistSession:true, detectSessionInUrl:true } });
-}
-
-/* ─────────── الإقلاع ─────────── */
 async function boot(){
-  if (!cfg.url || !cfg.key) { show('setup'); return; }
-  connect();
+  sb = createClient(cfg.url, cfg.key, { auth:{ persistSession:true, detectSessionInUrl:true } });
   const { data:{ session } } = await sb.auth.getSession();
   if (!session) { show('auth'); return; }
   user = session.user;
@@ -384,224 +596,167 @@ async function boot(){
   show('whoBox');
 
   const { data, error } = await sb.from('app_admins').select('user_id').eq('user_id', user.id).maybeSingle();
-  if (error && /relation .* does not exist/i.test(error.message||'')) {
+  if (!data) {
     show('denied');
-    $('myUid').textContent = user.id;
-    $('sqlSnippet').textContent = "-- الجدول غير موجود. شغّل supabase/announcements.sql أولًا.";
+    $('sqlSnippet').textContent = error && /does not exist/i.test(error.message||'')
+      ? '-- شغّل announcements.sql أولًا، ثم عد إلى هنا.'
+      : `insert into public.app_admins (user_id, note)\nvalues ('${user.id}', 'owner')\non conflict (user_id) do nothing;`;
     return;
   }
-  isAdmin = !!data;
-  if (!isAdmin) {
-    show('denied');
-    $('myUid').textContent = user.id;
-    $('sqlSnippet').textContent =
-      "insert into public.app_admins (user_id, note)\nvalues ('" + user.id + "', 'owner')\non conflict (user_id) do nothing;";
-    return;
-  }
-  show('app');
-  buildChips();
-  bind();
-  render();
-  loadList();
-  checkTokens();
+  show('app'); show('transmit');
+  buildKeys(); bind(); render(); loadLog(); probePush();
 }
 
-document.addEventListener('click', async (e) => {
-  if (e.target.id !== 'copySql') return;
-  try {
-    await navigator.clipboard.writeText($('sqlSnippet').textContent);
-    $('copyMsg').textContent = 'نُسخ ✓ — الصقه في Supabase ← SQL Editor';
-  } catch {
-    // الحافظة تحتاج سياقًا آمنًا (https أو localhost) — نُحدّد النصّ ليُنسخ يدويًّا
-    const r = document.createRange();
-    r.selectNodeContents($('sqlSnippet'));
-    getSelection().removeAllRanges();
-    getSelection().addRange(r);
-    $('copyMsg').textContent = 'حُدِّد النصّ — انسخه بـ⌘C';
-  }
-});
-
-$('openCfg').onclick = () => {
-  const on = $('setup').classList.contains('hide');
-  show('setup', on);
-  if (on) { $('cfgUrl').value = cfg.url; $('cfgKey').value = cfg.key; }
-};
-
-$('cfgSave').onclick = () => {
-  const u = $('cfgUrl').value, k = $('cfgKey').value;
-  if (!u || !k) return;
-  if (/^sb_secret|^service_role|^eyJ/.test(k.trim())) {
-    alert('هذا يبدو مفتاحًا سرّيًّا. استعمل المفتاح المنشور (anon / publishable) وحده.');
-    return;
-  }
-  cfg.save(u,k); location.reload();
-};
-
-$('btnGoogle').onclick = async () => {
-  await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.href.split('#')[0] } });
-};
-$('btnMagic').onclick = async () => {
-  const email = $('email').value.trim();
-  if (!email) return;
-  const { error } = await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.href.split('#')[0] } });
-  $('authMsg').innerHTML = error
-    ? '<div class="err">'+error.message+'</div>'
-    : '<div class="ok">أُرسل رابط الدخول إلى بريدك.</div>';
-};
-$('signOut').onclick = async () => { await sb.auth.signOut(); location.reload(); };
-
-/* ─────────── الواجهة ─────────── */
-function buildChips(){
+function buildKeys(){
   $('kinds').innerHTML = KINDS.map(k =>
-    `<div class="chip ${k.cls} ${k.id===kind?'on':''}" data-kind="${k.id}">${k.label}</div>`).join('');
+    `<button type="button" class="key" data-kind="${k.id}" data-tone="${k.tone}" aria-pressed="${k.id===kind}">
+       <svg class="i"><use href="#${k.icon}"/></svg>${k.label}</button>`).join('');
   $('styles').innerHTML = STYLES.map(s =>
-    `<div class="chip ${s.id===style?'on':''}" data-style="${s.id}">${s.label}</div>`).join('');
+    `<button type="button" class="key" data-style="${s.id}" aria-pressed="${s.id===style}">${s.label}</button>`).join('');
   $('durs').innerHTML = DURS.map(d =>
-    `<div class="chip ${d.d===durDays?'on':''}" data-dur="${d.d}">${d.label}</div>`).join('');
+    `<button type="button" class="key" data-dur="${d.d}" aria-pressed="${d.d===durDays}">${d.label}</button>`).join('');
 }
 
 function bind(){
-  $('kinds').onclick = (e) => { const v=e.target.dataset.kind; if(!v)return; kind=v; buildChips(); render(); };
-  $('styles').onclick = (e) => { const v=e.target.dataset.style; if(!v)return; style=v; buildChips(); render(); };
-  $('durs').onclick = (e) => { const v=e.target.dataset.dur; if(v===undefined)return; durDays=+v; buildChips(); };
+  $('kinds').onclick = e => { const b=e.target.closest('[data-kind]'); if(!b)return; kind=b.dataset.kind; buildKeys(); render(); };
+  $('styles').onclick = e => { const b=e.target.closest('[data-style]'); if(!b)return; style=b.dataset.style; buildKeys(); render(); };
+  $('durs').onclick = e => { const b=e.target.closest('[data-dur]'); if(!b)return; durDays=+b.dataset.dur; buildKeys(); render(); };
   ['title','body','subtitle'].forEach(id => $(id).oninput = render);
   $('inApp').onchange = () => { show('inAppOpts', $('inApp').checked); render(); };
   $('push').onchange = render;
+  $('route').onchange = render;
+  $('pickFile').onclick = () => $('file').click();
   $('file').onchange = upload;
+  $('dropImg').onclick = () => { imageUrl=''; $('file').value=''; $('imgState').textContent=''; show('dropImg',false); render(); };
   $('publish').onclick = publish;
-  $('reload').onclick = loadList;
+  $('reload').onclick = () => loadLog();
 }
 
-function clamp(t, n){ t=(t||'').trim(); return t.length<=n ? {s:t,cut:false} : {s:t.slice(0,n).trimEnd()+'…',cut:true}; }
+const clamp = (t,n) => { t=(t||'').trim(); return t.length<=n ? {s:t,cut:false} : {s:t.slice(0,n).trimEnd()+'…',cut:true}; };
 
 function render(){
-  const t = clamp($('title').value, LIMITS.title);
-  const b = clamp($('body').value, LIMITS.body);
-  const s = clamp($('subtitle').value, 60);
+  const rawT = $('title').value, rawB = $('body').value;
+  const t = clamp(rawT, LIMITS.title), b = clamp(rawB, LIMITS.body), s = clamp($('subtitle').value, 60);
+  const k = KINDS.find(x=>x.id===kind);
+  const inApp = $('inApp').checked, doPush = $('push').checked;
 
-  $('cTitle').textContent = `${$('title').value.length}/${LIMITS.title}`;
-  $('cTitle').classList.toggle('over', $('title').value.length > LIMITS.title);
-  $('cBody').textContent = `${$('body').value.length}/${LIMITS.body}`;
-  $('cBody').classList.toggle('over', $('body').value.length > LIMITS.body);
+  $('gTitle').textContent = `${rawT.length}/${LIMITS.title}`;
+  $('gTitle').className = 'gauge' + (rawT.length > LIMITS.title ? ' over' : rawT.length > LIMITS.title*0.85 ? ' warn' : '');
+  $('gBody').textContent = `${rawB.length}/${LIMITS.body}`;
+  $('gBody').className = 'gauge' + (rawB.length > LIMITS.body ? ' over' : rawB.length > LIMITS.body*0.85 ? ' warn' : '');
 
+  show('pvNotif', doPush);
   $('pvTitle').textContent = t.s || 'عنوان الإعلان';
   $('pvSub').textContent = s.s;
   $('pvBody').textContent = b.s;
-  $('pvImg').style.display = imageUrl ? 'block' : 'none';
-  if (imageUrl) $('pvImg').src = imageUrl;
+  // الصورة تُنشأ عند وجودها فقط — <img> بلا src يُشحن مربّعًا مكسورًا
+  $('pvImgSlot').innerHTML = imageUrl ? `<img src="${esc(imageUrl)}" alt="">` : '';
 
-  const k = KINDS.find(x => x.id===kind);
+  show('pvInApp', inApp);
   const title = t.s || 'العنوان';
-  $('pvInApp').innerHTML = !$('inApp').checked
-    ? '<div class="note" style="font-size:12px">لن يظهر داخل التطبيق — إشعار فقط.</div>'
-    : style === 'strip'
-      ? `<div class="strip" style="background:${k.soft};border-color:${k.tint}44">
-           <span class="stripdot" style="background:${k.tint}"></span>
-           <span style="overflow:hidden;text-overflow:ellipsis">${esc(b.s ? title+' — '+b.s : title)}</span>
-         </div>`
-      : `<div class="board" style="border-color:${k.tint}3A">
-           ${imageUrl ? `<img src="${esc(imageUrl)}" alt="">` : ''}
-           <div class="bpad">
-             <div class="bkind" style="color:${k.tint}">${k.label}</div>
-             <div class="btitle">${esc(title)}</div>
-             ${b.s ? `<div class="bbody">${esc(b.s)}</div>` : ''}
-           </div>
-         </div>`;
+  $('pvInApp').innerHTML = style === 'strip'
+    ? `<div class="strip" style="background:${k.soft};border-color:${k.c}44;color:#241F3B">
+         <span class="dot" style="background:${k.c}"><svg class="i"><use href="#${k.icon}"/></svg></span>
+         <span class="txt">${esc(b.s ? title+' — '+b.s : title)}</span>
+         <svg class="i" style="width:14px;height:14px;color:#5F5880"><use href="#i-x"/></svg>
+       </div>`
+    : `<div class="board" style="border-color:${k.c}3A">
+         ${imageUrl ? `<img src="${esc(imageUrl)}" alt="">` : ''}
+         <div class="board-pad">
+           <div class="board-kind" style="color:${k.c}">${k.label}</div>
+           <h3>${esc(title)}</h3>${b.s ? `<p>${esc(b.s)}</p>` : ''}
+         </div>
+       </div>`;
+
+  const cut = t.cut || b.cut || s.cut;
+  $('pvNote').textContent = (!doPush && !inApp) ? 'بلا قناة — لن يصل ولن يظهر'
+    : cut ? 'ما بعد النقاط لا يُقرأ إلا بفتح الإشعار'
+    : (doPush && inApp) ? 'يظهر داخل التطبيق ويصل إشعارًا'
+    : doPush ? 'إشعار فقط — لا يبقى داخل التطبيق'
+    : 'داخل التطبيق فقط — بلا إزعاج';
+
+  arm();
 }
 
-const esc = (s) => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/** حالة المفتاح — المصباح يقول ما ينقص، لا «غير صالح» فحسب */
+function arm(){
+  const t = $('title').value.trim();
+  const ok = !!t && ($('inApp').checked || $('push').checked)
+    && $('title').value.length <= LIMITS.title && $('body').value.length <= LIMITS.body;
+  $('publish').disabled = !ok;
+  $('bulb').className = 'bulb' + (ok ? ' armed' : '');
+  $('lampState').textContent = ok ? 'ARMED' : 'STANDBY';
+  $('lampSub').textContent = !t ? 'العنوان مطلوب'
+    : (!$('inApp').checked && !$('push').checked) ? 'اختر قناةً واحدة على الأقلّ'
+    : ($('title').value.length > LIMITS.title || $('body').value.length > LIMITS.body) ? 'النصّ أطول من الحدّ'
+    : ($('push').checked && deviceCount) ? `${deviceCount} جهازًا على الاستقبال`
+    : 'جاهز للنشر';
+}
 
-/* ─────────── الصورة ─────────── */
 async function upload(e){
-  const f = e.target.files?.[0];
-  if (!f) return;
-  $('imgState').innerHTML = '<div class="note">يُرفع…</div>';
+  const f = e.target.files?.[0]; if (!f) return;
+  $('imgState').textContent = 'يُرفع…';
   const path = `announcements/${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
-  const { error } = await sb.storage.from('public-assets').upload(path, f, { contentType:f.type, upsert:false });
-  if (error) {
-    // المخزن العامّ غير مهيّأ — نُبقي المعاينة محليًّا ونقول السبب بلا غموض
+  const { error } = await sb.storage.from('public-assets').upload(path, f, { contentType:f.type });
+  if (error){
     imageUrl = URL.createObjectURL(f);
-    $('imgState').innerHTML = '<div class="err">تعذّر الرفع: '+esc(error.message)+
-      '<br>أنشئ مخزنًا عامًّا باسم <code>public-assets</code> من لوحة Supabase.</div>';
-    render();
-    return;
+    $('imgState').innerHTML = `<span style="color:var(--live)">تعذّر الرفع</span> — أنشئ مخزنًا عامًّا <code>public-assets</code>`;
+  } else {
+    imageUrl = sb.storage.from('public-assets').getPublicUrl(path).data.publicUrl;
+    $('imgState').innerHTML = '<span style="color:var(--ok)">رُفعت ✓</span>';
   }
-  const { data } = sb.storage.from('public-assets').getPublicUrl(path);
-  imageUrl = data.publicUrl;
-  $('imgState').innerHTML = '<div class="ok">رُفعت ✓</div>';
-  render();
+  show('dropImg'); render();
 }
 
-/* ─────────── الإشعار الفوري ─────────── */
-/*
- * عدّ الأجهزة — **فريدة** لا صفوفًا.
- * الصفّان لجهاز واحد يقعان فعلًا (تسجيل خروج ودخول يُحدّث الرمز، وقد يبقى القديم
- * على صفٍّ آخر). عدُّ الصفوف كان يقول «٩» والحقيقة ٦ — ورقمٌ يكذب في التقرير
- * يجعل كل ما بعده مشكوكًا فيه.
- */
 async function tokens(){
   const { data, error } = await sb.from('profiles').select('push_token').not('push_token','is',null);
   if (error || !data) return [];
-  return [...new Set(data.map(r => r.push_token).filter(t => t && t.startsWith('ExponentPushToken')))];
+  // فريدة لا صفوفًا: تسجيل خروج ودخول يُحدّث الرمز وقد يبقى القديم على صفّ آخر
+  return [...new Set(data.map(r=>r.push_token).filter(t=>t&&t.startsWith('ExponentPushToken')))];
 }
 
-/** هل دالّة الإرسال منشورة؟ بدونها لا إشعار فوري — والمتصفّح لا يبلغ Expo مباشرةً */
-let pushReady = false;
-async function checkTokens(){
+async function probePush(){
   const t = await tokens();
-  if (!t.length) {
-    pushReady = false;
-    $('pushInfo').innerHTML = '<span style="color:var(--gold)">لم تُفعَّل سياسة قراءة رموز الإشعارات</span> — '
-      + 'سيصل الإعلان داخل التطبيق ويُنبّه كل جهاز نفسه عند فتحه. (القسم ٣ في announcements.sql)';
-    return;
+  deviceCount = t.length;
+  if (!t.length){
+    $('pushInfo').innerHTML = '<span style="color:var(--armed)">سياسة قراءة رموز الإشعارات غير مفعّلة</span> — '
+      + 'يصل الإعلان داخل التطبيق ويُنبّه كل جهاز نفسه عند فتحه. (القسم ٣ في announcements.sql)';
+    arm(); return;
   }
-  const { error } = await sb.functions.invoke('send-push', { body: { probe:true } });
-  // خطأ ٤٠٠ «العنوان مطلوب» يعني أن الدالّة تعمل وتحرس — وهو ما نريد التأكّد منه
-  const missing = error && /not found|does not exist|Failed to send/i.test(error.message || '');
-  pushReady = !missing;
-  $('pushInfo').innerHTML = pushReady
-    ? `${t.length} جهازًا سيصله الإشعار فورًا.`
-    : `${t.length} جهازًا — لكن <span style="color:var(--gold)">دالّة الإرسال غير منشورة</span>، `
-      + 'فلا إشعار فوري بعد. انشر <code>supabase/send-push-function.ts</code> باسم <code>send-push</code>. '
+  const { error } = await sb.functions.invoke('send-push', { body:{ probe:true } });
+  const missing = error && /not found|does not exist|Failed to send/i.test(error.message||'');
+  $('pushInfo').innerHTML = !missing
+    ? `<span class="num">${t.length}</span> جهازًا سيصله الإشعار في اللحظة نفسها.`
+    : `<span class="num">${t.length}</span> جهازًا — لكن <span style="color:var(--armed)">دالّة الإرسال غير منشورة</span>، `
+      + 'فلا إشعار فوري بعد. انشر <code>send-push-function.ts</code> باسم <code>send-push</code>. '
       + 'وحتى ذلك يصل الإعلان داخل التطبيق ويُنبّه كل جهاز نفسه عند فتحه.';
+  arm();
 }
 
-/*
- * الإرسال يمرّ بدالّة الحافّة لا بـExpo مباشرةً.
- *
- * Expo لا تُرسل `Access-Control-Allow-Origin`، فالمتصفّح يقتل الطلب قبل خروجه
- * (`TypeError: Failed to fetch`). وهذا حدٌّ مقصود يمنع أي صفحة من قصف الخدمة —
- * لا عيبٌ يُلتفّ عليه. فالدالّة هي الطرف الخادم الذي يُرسل، وهي تتحقّق من أنك
- * مشرف بـرمزك أنت قبل أن ترسل شيئًا.
- */
-async function sendPush(_list, content){
+/* الإرسال يمرّ بدالّة الحافّة: Expo لا تُرسل ترويسة CORS فيقتل المتصفّح الطلب
+   قبل خروجه — حدٌّ مقصود يمنع أي صفحة من قصف الخدمة، لا عيبٌ يُلتفّ عليه. */
+async function sendPush(content){
   const { data, error } = await sb.functions.invoke('send-push', { body: content });
-  if (error) return { sent:0, failed:0, error: error.message };
+  if (error) return { error: error.message };
   return { sent: data?.sent ?? 0, failed: data?.failed ?? 0 };
 }
 
-/* ─────────── النشر ─────────── */
-function untilDate(days){
-  if (days < 0) return null;
-  const d = new Date(); d.setDate(d.getDate()+days);
-  return d.toISOString().slice(0,10);
-}
+const untilDate = (d) => { if (d < 0) return null; const x=new Date(); x.setDate(x.getDate()+d); return x.toISOString().slice(0,10); };
 
 async function publish(){
   const title = $('title').value.trim();
-  if (!title) { $('msg').innerHTML = '<div class="err">العنوان مطلوب.</div>'; return; }
   const inApp = $('inApp').checked, doPush = $('push').checked;
-  if (!inApp && !doPush) { $('msg').innerHTML = '<div class="err">اختر قناةً واحدة على الأقلّ.</div>'; return; }
-
   $('publish').disabled = true;
-  $('msg').innerHTML = '<div class="note">يُنشر…</div>';
+  $('goTxt').textContent = 'يُبثّ…';
+  $('msg').className = 'transmit-msg';
+  $('msg').textContent = '';
 
   const row = {
     title,
     body: $('body').value.trim() || null,
     subtitle: $('subtitle').value.trim() || null,
     kind, style,
-    image_url: imageUrl && !imageUrl.startsWith('blob:') ? imageUrl : null,
+    image_url: (imageUrl && !imageUrl.startsWith('blob:')) ? imageUrl : null,
     route: $('route').value || null,
     until: inApp ? untilDate(durDays) : null,
     active: inApp,
@@ -609,68 +764,115 @@ async function publish(){
   };
 
   const { error } = await sb.from('app_announcements').insert(row);
-  if (error) {
+  if (error){
     const denied = error.code === '42501' || /row-level security/i.test(error.message||'');
-    $('msg').innerHTML = '<div class="err">'+(denied
-      ? 'رفضته قاعدة البيانات — حسابك ليس في جدول المشرفين.'
-      : esc(error.message))+'</div>';
-    $('publish').disabled = false;
-    return;
+    $('msg').className = 'transmit-msg err';
+    $('msg').textContent = denied ? 'رفضته قاعدة البيانات — حسابك ليس في جدول المشرفين.' : error.message;
+    $('goTxt').textContent = 'نشر'; arm(); return;
   }
 
   const parts = [];
   if (inApp) parts.push(row.until ? `يظهر داخل التطبيق حتى ${row.until}` : 'يظهر داخل التطبيق بلا نهاية');
   if (doPush){
-    const list = await tokens();
-    if (!list.length) parts.push('بلا إشعار فوري — سيُنبّه كل جهاز نفسه عند فتحه');
+    if (!deviceCount) parts.push('بلا إشعار فوري — سيُنبّه كل جهاز نفسه عند فتحه');
     else {
-      const r = await sendPush(list, { title, subtitle:row.subtitle, body:row.body, route:row.route });
-      if (r.error) parts.push(`تعذّر الإشعار الفوري (${r.error}) — لكن كل جهاز سيُنبّه نفسه عند فتحه`);
-      else parts.push(`وصل إشعارًا إلى ${r.sent} جهازًا${r.failed?` (تعذّر ${r.failed})`:''}`);
+      const r = await sendPush({ title, subtitle:row.subtitle, body:row.body, route:row.route });
+      parts.push(r.error
+        ? `تعذّر الإشعار الفوري (${r.error}) — لكن كل جهاز سيُنبّه نفسه عند فتحه`
+        : `وصل إلى ${r.sent} جهازًا${r.failed ? ` · تعذّر ${r.failed}` : ''}`);
     }
   }
 
-  $('msg').innerHTML = '<div class="ok">نُشر ✓ — '+esc(parts.join(' · '))+'</div>';
+  // الحركة الوحيدة المقصودة في الصفحة: المصباح يخرج على الهواء
+  $('bulb').className = 'bulb live';
+  $('lampState').textContent = 'ON AIR';
+  $('lampSub').textContent = 'نُشر الآن';
+  $('msg').className = 'transmit-msg ok';
+  $('msg').textContent = parts.join(' · ');
+  $('goTxt').textContent = 'نشر';
+
   $('title').value=''; $('body').value=''; $('subtitle').value='';
-  imageUrl=''; $('file').value=''; $('imgState').innerHTML='';
-  render(); loadList();
-  $('publish').disabled = false;
+  imageUrl=''; $('file').value=''; $('imgState').textContent=''; show('dropImg',false);
+  render(); loadLog(true);
+  setTimeout(() => { if ($('bulb').classList.contains('live')) arm(); }, 4200);
 }
 
-/* ─────────── المنشور ─────────── */
-async function loadList(){
+async function loadLog(fresh){
   const { data, error } = await sb.from('app_announcements')
     .select('id,title,kind,style,until,active,created_at')
     .order('created_at',{ascending:false}).limit(30);
-  if (error) { $('list').innerHTML = `<tr><td colspan="6" class="note">${esc(error.message)}</td></tr>`; return; }
-  if (!data.length) { $('list').innerHTML = '<tr><td colspan="6" class="note">لم يُنشر شيء بعد.</td></tr>'; return; }
+
+  if (error){ $('list').innerHTML = `<tr><td colspan="6" class="empty">${esc(error.message)}</td></tr>`; return; }
+  if (!data.length){
+    $('list').innerHTML = `<tr><td colspan="6"><div class="empty">
+      <svg class="i"><use href="#i-tower"/></svg>
+      <p>لم يخرج شيء على الهواء بعد.</p></div></td></tr>`;
+    return;
+  }
+
   const today = new Date().toISOString().slice(0,10);
-  $('list').innerHTML = data.map(a => {
+  $('list').innerHTML = data.map((a,i) => {
     const k = KINDS.find(x=>x.id===a.kind) ?? KINDS[0];
     const live = a.active && (!a.until || a.until >= today);
-    return `<tr>
-      <td style="font-weight:600">${esc(a.title)}</td>
-      <td><span class="pill" style="background:${k.soft};color:${k.tint}">${k.label}</span></td>
-      <td class="note">${a.style==='board'?'لوحة':'شريط'}</td>
-      <td class="note">${a.until ? esc(a.until) : 'بلا نهاية'}</td>
+    return `<tr${fresh && i===0 ? ' class="row-new"' : ''}>
+      <td style="font-weight:500;max-width:340px">${esc(a.title)}</td>
+      <td><span class="tag" style="border-color:${k.c}66;color:${k.c === '#5B4BAE' ? 'var(--plum)' : k.c}">
+            <svg class="i" style="width:12px;height:12px"><use href="#${k.icon}"/></svg>${k.label}</span></td>
+      <td class="dim">${a.style==='board'?'لوحة':'شريط'}</td>
+      <td class="dim"><span class="num">${a.until ? esc(a.until) : '—'}</span></td>
       <td>${live
-        ? '<span class="pill" style="background:var(--sageSoft);color:var(--sage)">ظاهر</span>'
-        : '<span class="pill" style="background:var(--panel2);color:var(--muted)">منتهٍ</span>'}</td>
-      <td>${live ? `<button class="danger" data-off="${a.id}" style="padding:6px 12px;min-height:0;font-size:12.5px">إيقاف</button>` : ''}</td>
+        ? '<span class="tag" style="border-color:#7FD68F55;color:var(--ok)">على الهواء</span>'
+        : '<span class="tag" style="border-color:var(--rule);color:var(--dim)">انتهى</span>'}</td>
+      <td style="text-align:left">${live
+        ? `<button type="button" class="btn btn--live" data-off="${a.id}" style="min-height:34px;padding:0 12px;font-size:13px">
+             <svg class="i" style="width:13px;height:13px"><use href="#i-eye-off"/></svg>إيقاف</button>` : ''}</td>
     </tr>`;
   }).join('');
+
   $('list').onclick = async (e) => {
-    const id = e.target.dataset.off;
-    if (!id) return;
-    e.target.disabled = true;
-    await sb.from('app_announcements').update({ active:false }).eq('id', id);
-    loadList();
+    const btn = e.target.closest('[data-off]'); if (!btn) return;
+    btn.disabled = true; btn.textContent = 'يُوقَف…';
+    await sb.from('app_announcements').update({ active:false }).eq('id', btn.dataset.off);
+    loadLog();
   };
 }
 
-/* ─────────── تشغيل ─────────── */
-$('cfgUrl').value = cfg.url;
-$('cfgKey').value = cfg.key;
+$('openCfg').onclick = () => {
+  const on = $('setup').classList.contains('hide');
+  show('setup', on);
+  if (on){ $('cfgUrl').value = cfg.url; $('cfgKey').value = cfg.key; }
+};
+$('cfgSave').onclick = () => {
+  const u=$('cfgUrl').value, k=$('cfgKey').value;
+  if (!u || !k) return;
+  if (/^sb_secret|^service_role|^eyJ/.test(k.trim())){
+    alert('هذا يبدو مفتاحًا سرّيًّا. استعمل المفتاح المنشور (anon) وحده.');
+    return;
+  }
+  cfg.save(u,k); location.reload();
+};
+$('btnGoogle').onclick = () => sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.href.split('#')[0] } });
+$('btnMagic').onclick = async () => {
+  const email = $('email').value.trim(); if (!email) return;
+  const { error } = await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.href.split('#')[0] } });
+  $('authMsg').innerHTML = error
+    ? `<span style="color:var(--live)">${esc(error.message)}</span>`
+    : '<span style="color:var(--ok)">أُرسل رابط الدخول إلى بريدك.</span>';
+};
+$('signOut').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+document.addEventListener('click', async (e) => {
+  if (!e.target.closest('#copySql')) return;
+  try {
+    await navigator.clipboard.writeText($('sqlSnippet').textContent);
+    $('copyMsg').innerHTML = '<span style="color:var(--ok)">نُسخ ✓ — الصقه في Supabase ← SQL Editor</span>';
+  } catch {
+    const r = document.createRange(); r.selectNodeContents($('sqlSnippet'));
+    getSelection().removeAllRanges(); getSelection().addRange(r);
+    $('copyMsg').textContent = 'حُدِّد النصّ — انسخه بـ⌘C';
+  }
+});
+
 boot();
 </script>
 </body>
